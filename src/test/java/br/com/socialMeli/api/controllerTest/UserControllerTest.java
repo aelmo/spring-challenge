@@ -29,8 +29,11 @@ public class UserControllerTest {
 
     private static final Logger logger = LoggerFactory.getLogger(UserControllerTest.class);
 
-    private static final int HTTP_STATUS_CODE_CREATED = 201;
+    private static final int HTTP_STATUS_CODE_OK = 200;
     private static final int HTTP_STATUS_CODE_BAD_REQUEST = 400;
+
+    private static final Long USER_SELLER_ID = 1L;
+    private static final Long USER_NOT_SELLER_ID = 2L;
 
     private UserController userController;
 
@@ -74,7 +77,7 @@ public class UserControllerTest {
                 "brandon@gmail.com",
                 new Date(2001 - 8 - 3),
                 "12345678910",
-                true,
+                false,
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new Date(),
@@ -89,12 +92,12 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldSaveToFollowersListIfValidAndReturnCreated() {
-        logger.info("TEST - POST - Social Meli - (followUser) - shouldSaveToFollowersListIfValidAndReturnCreated()");
+    public void shouldSaveToFollowersListIfValidAndReturnOk() {
+        logger.info("TEST - POST - Social Meli - (followUser) - shouldSaveToFollowersListIfValidAndReturnOk()");
 
-        ResponseEntity<?> responseEntity = userController.followUser(1L, 2L);
+        ResponseEntity<?> responseEntity = userController.followUser(USER_NOT_SELLER_ID, USER_SELLER_ID);
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_CREATED);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_OK);
         assertNotNull(responseEntity.getBody());
     }
 
@@ -112,7 +115,37 @@ public class UserControllerTest {
     public void shouldNotSaveToFollowersListIfSameUserAndReturnBadRequest() {
         logger.info("TEST - POST - Social Meli - (followUser) - shouldNotSaveToFollowersListIfSameUserAndReturnBadRequest()");
 
-        ResponseEntity<?> responseEntity = userController.followUser(1L, 1L);
+        ResponseEntity<?> responseEntity = userController.followUser(USER_SELLER_ID, USER_SELLER_ID);
+
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertNotNull(responseEntity.getBody());
+    }
+
+    @Test
+    public void shouldNotSaveToFollowersListIfUserIsNotSellerAndReturnBadRequest() {
+        logger.info("TEST - POST - Social Meli - (followUser) - shouldNotSaveToFollowersListIfUserIsNotSellerAndReturnBadRequest()");
+
+        ResponseEntity<?> responseEntity = userController.followUser(USER_SELLER_ID, USER_NOT_SELLER_ID);
+
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertNotNull(responseEntity.getBody());
+    }
+
+    @Test
+    public void shouldShowFollowersCountAndReturnOk() {
+        logger.info("TEST - GET - Social Meli - (getFollowerCountForUser) - shouldShowFollowersCountAndReturnOk()");
+
+        ResponseEntity<?> responseEntity = userController.getFollowerCountForUser(USER_SELLER_ID);
+
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_OK);
+        assertNotNull(responseEntity.getBody());
+    }
+
+    @Test
+    public void shouldNotShowFollowersCountIfUserNotSellerAndReturnBadRequest() {
+        logger.info("TEST - GET - Social Meli - (getFollowerCountForUser) - shouldNotShowFollowersCountIfUserNotSellerAndReturnBadRequest()");
+
+        ResponseEntity<?> responseEntity = userController.getFollowerCountForUser(USER_NOT_SELLER_ID);
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
         assertNotNull(responseEntity.getBody());
