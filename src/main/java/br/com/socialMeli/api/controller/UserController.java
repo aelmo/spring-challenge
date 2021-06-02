@@ -1,8 +1,6 @@
 package br.com.socialMeli.api.controller;
 
-import br.com.socialMeli.api.dto.response.DefaultApiResponseDTO;
-import br.com.socialMeli.api.dto.response.FollowersCountResponseDTO;
-import br.com.socialMeli.api.dto.response.FollowersResponseSaveDTO;
+import br.com.socialMeli.api.dto.response.*;
 import br.com.socialMeli.api.model.User;
 import br.com.socialMeli.api.repository.UserRepository;
 import br.com.socialMeli.api.service.FollowersService;
@@ -13,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -48,24 +47,24 @@ public class UserController {
             Optional<User> userToBeFollowed = userRepository.findById(userIdToFollow);
 
             if (user.isEmpty())
-                return new ResponseEntity(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
 
             if (userToBeFollowed.isEmpty())
-                return new ResponseEntity(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
 
             if (userId.equals(userIdToFollow))
-                return new ResponseEntity(new DefaultApiResponseDTO(false, "You can't follow yourself."), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't follow yourself."), HttpStatus.BAD_REQUEST);
 
             if (!userToBeFollowed.get().getIsSeller())
-                return new ResponseEntity(new DefaultApiResponseDTO(false, "You can't follow an user that isn't a seller."), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't follow an user that isn't a seller."), HttpStatus.BAD_REQUEST);
 
             followersService.saveFollow(userId, userIdToFollow);
 
-            return new ResponseEntity(new FollowersResponseSaveDTO(true, "Follow executed with success!"), HttpStatus.OK);
+            return new ResponseEntity<>(new FollowersResponseSaveDTO(true, "Follow executed with success!"), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
-            return new ResponseEntity(new DefaultApiResponseDTO(false, "Internal server error: " + e), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Internal server error: " + e), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -85,19 +84,49 @@ public class UserController {
             Optional<User> user = userRepository.findById(userId);
 
             if (user.isEmpty())
-                return new ResponseEntity(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
 
             if (!user.get().getIsSeller())
-                return new ResponseEntity(new DefaultApiResponseDTO(false, "Only users that are sellers can have followers."), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Only users that are sellers can have followers."), HttpStatus.BAD_REQUEST);
 
-            Long count = followersService.followersCountById(userId);
+            Long count = followersService.getFollowersCountById(userId);
 
-            return new ResponseEntity(new FollowersCountResponseDTO(user.get().getId(), user.get().getName(), count), HttpStatus.OK);
+            return new ResponseEntity<>(new FollowersCountResponseDTO(user.get().getId(), user.get().getName(), count), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
-            return new ResponseEntity(new DefaultApiResponseDTO(false, "Internal server error: " + e), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Internal server error: " + e), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @ApiOperation(value = "Followers list for user")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User follower list returned with success"),
+            @ApiResponse(code = 400, message = "User not encountered")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the list will be made")
+    })
+    @GetMapping("/{userId}/followers/list")
+    public ResponseEntity<?> getFollowerListForUser(@PathVariable("userId") Long userId) {
+        logger.info("GET - Social Meli - (getFollowerListForUser) User: " + userId);
+
+        try {
+            Optional<User> user = userRepository.findById(userId);
+
+            if (user.isEmpty())
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+
+            if (!user.get().getIsSeller())
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Only users that are sellers can have a list of followers."), HttpStatus.BAD_REQUEST);
+
+            List<UniqueUserFollowerResponseDTO> followers = followersService.getFollowersListById(userId);
+
+            return new ResponseEntity<>(new UserFollowersResponseDTO(user.get().getId(), user.get().getName(), followers), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Internal server error: " + e), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

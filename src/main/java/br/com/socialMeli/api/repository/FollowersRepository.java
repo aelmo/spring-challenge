@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,6 +16,9 @@ public interface FollowersRepository extends CrudRepository<Followers, Long> {
 
     Optional<Followers> findById(final Long id);
 
-    @Query(value = "SELECT * FROM Followers f WHERE f.from = :id", nativeQuery = true)
-    Long followerCountById(@Param("id") final Long id);
+    @Query(value = "SELECT COUNT(from) FROM Followers f WHERE f.from = :id", nativeQuery = true)
+    Long getFollowerCountById(@Param("id") final Long id);
+
+    @Query(value = "SELECT f.from FROM Followers f WHERE f.from = :id", nativeQuery = true)
+    List<Long> getFollowerListById(@Param("id") final Long id);
 }

@@ -124,22 +124,43 @@ public class FollowersServiceTest {
 
     @Test
     public void shouldReturnFollowerCountWhenUserFoundAndSeller() {
-        logger.info("TEST - Followers Service - Followers Count By Id - shouldReturnFollowerCountWhenUserFoundAndSeller()");
+        logger.info("TEST - Followers Service - Get Followers Count By Id - shouldReturnFollowerCountWhenUserFoundAndSeller()");
 
-        assertThat(followersService.followersCountById(USER_SELLER_ID)).isNotNull();
+        assertThat(followersService.getFollowersCountById(USER_SELLER_ID)).isNotNull();
     }
 
     @Test
-    public void shouldReturnNullWhenUserFoundAndNotSeller() {
-        logger.info("TEST - Followers Service - Followers Count By Id - shouldReturnNullWhenUserFoundAndNotSeller()");
+    public void shouldReturnNullFollowersCountWhenUserFoundAndNotSeller() {
+        logger.info("TEST - Followers Service - Get Followers Count By Id - shouldReturnNullFollowersCountWhenUserFoundAndNotSeller()");
 
-        assertThat(followersService.followersCountById(USER_NOT_SELLER_ID)).isNull();
+        assertThat(followersService.getFollowersCountById(USER_NOT_SELLER_ID)).isNull();
     }
 
     @Test
-    public void shoudlReturnNullWhenUserNotFound() {
-        logger.info("TEST - Followers Service - Followers Count By Id - shoudlReturnNullWhenUserNotFound()");
+    public void shoudlReturnNullFollowersCountWhenUserNotFound() {
+        logger.info("TEST - Followers Service - Get Followers Count By Id - shoudlReturnNullFollowersCountWhenUserNotFound()");
 
-        assertThat(followersService.followersCountById(USER_NOT_EXISTS)).isNull();
+        assertThat(followersService.getFollowersCountById(USER_NOT_EXISTS)).isNull();
+    }
+
+    @Test
+    public void shouldReturnFollowerListWhenUserFoundAndSeller() {
+        logger.info("TEST - Followers Service - Get Followers List By Id - shouldReturnFollowerListWhenUserFoundAndSeller()");
+
+        assertThat(followersService.getFollowersListById(USER_SELLER_ID)).isNotNull();
+    }
+
+    @Test
+    public void shouldReturnNullFollowersListWhenUserFoundAndNotSeller() {
+        logger.info("TEST - Followers Service - Get Followers List By Id - shouldReturnNullFollowersListWhenUserFoundAndNotSeller()");
+
+        assertThat(followersService.getFollowersListById(USER_NOT_SELLER_ID)).isNull();
+    }
+
+    @Test
+    public void shoudlReturnNullFollowersListWhenUserNotFound() {
+        logger.info("TEST - Followers Service - Get Followers List By Id - shoudlReturnNullFollowersListWhenUserNotFound()");
+
+        assertThat(followersService.getFollowersListById(USER_NOT_EXISTS)).isNull();
     }
 }
