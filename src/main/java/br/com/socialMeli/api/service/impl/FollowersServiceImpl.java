@@ -1,5 +1,6 @@
 package br.com.socialMeli.api.service.impl;
 
+import br.com.socialMeli.api.dto.response.UniqueUserFollowerResponseDTO;
 import br.com.socialMeli.api.model.Followers;
 import br.com.socialMeli.api.model.User;
 import br.com.socialMeli.api.repository.FollowersRepository;
@@ -10,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,15 +57,48 @@ public class FollowersServiceImpl implements FollowersService {
     }
 
     @Override
-    public Long followersCountById(Long userId) {
-        logger.info("Followers Service - Followers Count By Id");
+    public Long getFollowersCountById(Long userId) {
+        logger.info("Followers Service - Get Followers Count By Id");
 
         try {
             Optional<User> user = userRepository.findById(userId);
 
             if (user.isPresent()) {
                 if (user.get().getIsSeller())
-                    return followersRepository.followerCountById(userId);
+                    return followersRepository.getFollowerCountById(userId);
+                logger.error("User is not a seller");
+                return null;
+            }
+
+            logger.error("User not found");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<UniqueUserFollowerResponseDTO> getFollowersListById(Long userId) {
+        logger.info("Followers Service - Get Followers List By Id");
+
+        try {
+            Optional<User> user = userRepository.findById(userId);
+            List<UniqueUserFollowerResponseDTO> followerList = new ArrayList<>();
+
+            if (user.isPresent()) {
+                if (user.get().getIsSeller()) {
+                    List<Long> followersId = followersRepository.getFollowerListById(userId);
+                    for (Long id : followersId) {
+                        Optional<User> userFound = userRepository.findById(id);
+                        if (userFound.isPresent()) {
+                            UniqueUserFollowerResponseDTO uniqueUser = new UniqueUserFollowerResponseDTO(userFound.get().getId(), userFound.get().getName());
+                            followerList.add(uniqueUser);
+                        }
+                    }
+                    return followerList;
+                }
                 logger.error("User is not a seller");
                 return null;
             }
