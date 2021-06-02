@@ -1,5 +1,6 @@
 package br.com.socialMeli.api.service;
 
+import br.com.socialMeli.api.dto.response.UniqueUserFollowedResponseDTO;
 import br.com.socialMeli.api.dto.response.UniqueUserFollowerResponseDTO;
 import br.com.socialMeli.api.model.Followers;
 
@@ -12,4 +13,6 @@ public interface FollowersService {
     Long getFollowersCountById(final Long userId);
 
     List<UniqueUserFollowerResponseDTO> getFollowersListById(final Long userId);
+
+    List<UniqueUserFollowedResponseDTO> getFollowedsListById(final Long userId);
 }
