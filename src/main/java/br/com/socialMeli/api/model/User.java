@@ -53,11 +53,11 @@ public class User {
     @Column(name = "is_seller", nullable = false, columnDefinition = "bool default false")
     private Boolean isSeller;
 
-    @OneToMany(mappedBy = "to")
-    private List<Followers> followers;
+    @OneToMany(mappedBy = "followed")
+    private List<Followers> followed;
 
-    @OneToMany(mappedBy = "from")
-    private List<Followers> following;
+    @OneToMany(mappedBy = "follower")
+    private List<Followers> followers;
 
     @Basic
     @CreatedDate

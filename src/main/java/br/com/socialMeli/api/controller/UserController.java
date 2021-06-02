@@ -129,4 +129,32 @@ public class UserController {
             return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Internal server error: " + e), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @ApiOperation(value = "Followed list for user")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User followed list returned with success"),
+            @ApiResponse(code = 400, message = "User not encountered")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the list will be made")
+    })
+    @GetMapping("/{userId}/followed/list")
+    public ResponseEntity<?> getFollowedListForUser(@PathVariable("userId") Long userId) {
+        logger.info("GET - Social Meli - (getFollowedListForUser) User: " + userId);
+
+        try {
+            Optional<User> user = userRepository.findById(userId);
+
+            if (user.isEmpty())
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+
+            List<UniqueUserFollowedResponseDTO> followeds = followersService.getFollowedsListById(userId);
+
+            return new ResponseEntity<>(new UserFollowedsResponseDTO(user.get().getId(), user.get().getName(), followeds), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Internal server error: " + e), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

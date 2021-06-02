@@ -1,5 +1,6 @@
 package br.com.socialMeli.api.service.impl;
 
+import br.com.socialMeli.api.dto.response.UniqueUserFollowedResponseDTO;
 import br.com.socialMeli.api.dto.response.UniqueUserFollowerResponseDTO;
 import br.com.socialMeli.api.model.Followers;
 import br.com.socialMeli.api.model.User;
@@ -98,6 +99,39 @@ public class FollowersServiceImpl implements FollowersService {
                         }
                     }
                     return followerList;
+                }
+                logger.error("User is not a seller");
+                return null;
+            }
+
+            logger.error("User not found");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<UniqueUserFollowedResponseDTO> getFollowedsListById(Long userId) {
+        logger.info("Followers Service - Get Followeds List By Id");
+
+        try {
+            Optional<User> user = userRepository.findById(userId);
+            List<UniqueUserFollowedResponseDTO> followedsList = new ArrayList<>();
+
+            if (user.isPresent()) {
+                if (user.get().getIsSeller()) {
+                    List<Long> followedsId = followersRepository.getFollowedListById(userId);
+                    for (Long id : followedsId) {
+                        Optional<User> userFound = userRepository.findById(id);
+                        if (userFound.isPresent()) {
+                            UniqueUserFollowedResponseDTO uniqueUser = new UniqueUserFollowedResponseDTO(userFound.get().getId(), userFound.get().getName());
+                            followedsList.add(uniqueUser);
+                        }
+                    }
+                    return followedsList;
                 }
                 logger.error("User is not a seller");
                 return null;

@@ -22,15 +22,15 @@ public class Followers {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "from_user_fk")
-    private User from;
+    @JoinColumn(name = "follower_user_fk")
+    private User follower;
 
     @ManyToOne
-    @JoinColumn(name = "to_user_fk")
-    private User to;
+    @JoinColumn(name = "followed_user_fk")
+    private User followed;
 
     public Followers(User userFollowing, User userFollowed) {
-        this.from = userFollowing;
-        this.to = userFollowed;
+        this.follower = userFollowing;
+        this.followed = userFollowed;
     }
 }
