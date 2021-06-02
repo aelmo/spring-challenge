@@ -30,6 +30,10 @@ public class FollowersServiceTest {
 
     private FollowersServiceImpl followersService;
 
+    private static final Long USER_SELLER_ID = 1L;
+    private static final Long USER_NOT_SELLER_ID = 2L;
+    private static final Long USER_NOT_EXISTS = 50L;
+
     @Mock
     private UserRepository userRepository;
 
@@ -73,7 +77,7 @@ public class FollowersServiceTest {
                 "brandon@gmail.com",
                 new Date(2001 - 8 - 3),
                 "12345678910",
-                true,
+                false,
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new Date(),
@@ -89,19 +93,19 @@ public class FollowersServiceTest {
         userList.add(userMock);
         userList.add(userMock);
 
-        when(userRepository.findById(userMock.getId())).thenReturn(Optional.of(userMock));
-        when(userRepository.findById(userMock1.getId())).thenReturn(Optional.of(userMock1));
+        when(userRepository.findById(USER_SELLER_ID)).thenReturn(Optional.of(userMock));
+        when(userRepository.findById(USER_NOT_SELLER_ID)).thenReturn(Optional.of(userMock1));
 
         when(followersRepository.save(followersMock)).thenReturn(followersMock);
 
-        when(followersService.saveFollow(userMock.getId(), userMock1.getId())).thenReturn(followersMock);
+        when(followersService.saveFollow(USER_NOT_SELLER_ID, USER_SELLER_ID)).thenReturn(followersMock);
     }
 
     @Test
     public void shouldReturnFollowersWhenCreatedWithSuccess() {
         logger.info("TEST - Followers Service - Save Follow - shouldReturnIdWhenCreatedWithSuccess()");
 
-        assertThat(followersService.saveFollow(userMock.getId(), userMock1.getId())).isSameAs(followersRepository.save(followersMock));
+        assertThat(followersService.saveFollow(USER_NOT_SELLER_ID, USER_SELLER_ID)).isSameAs(followersRepository.save(followersMock));
     }
 
     @Test
@@ -109,5 +113,33 @@ public class FollowersServiceTest {
         logger.info("TEST - Followers Service - Save Follow - shouldReturnNullWhenFailedToCreate()");
 
         assertThat(followersService.saveFollow(0L, 3L)).isNull();
+    }
+
+    @Test
+    public void shouldReturnNullWhenUserNotSeller() {
+        logger.info("TEST - Followers Service - Save Follow - shouldReturnNullWhenUserNotSeller()");
+
+        assertThat(followersService.saveFollow(USER_SELLER_ID, USER_NOT_SELLER_ID)).isNull();
+    }
+
+    @Test
+    public void shouldReturnFollowerCountWhenUserFoundAndSeller() {
+        logger.info("TEST - Followers Service - Followers Count By Id - shouldReturnFollowerCountWhenUserFoundAndSeller()");
+
+        assertThat(followersService.followersCountById(USER_SELLER_ID)).isNotNull();
+    }
+
+    @Test
+    public void shouldReturnNullWhenUserFoundAndNotSeller() {
+        logger.info("TEST - Followers Service - Followers Count By Id - shouldReturnNullWhenUserFoundAndNotSeller()");
+
+        assertThat(followersService.followersCountById(USER_NOT_SELLER_ID)).isNull();
+    }
+
+    @Test
+    public void shoudlReturnNullWhenUserNotFound() {
+        logger.info("TEST - Followers Service - Followers Count By Id - shoudlReturnNullWhenUserNotFound()");
+
+        assertThat(followersService.followersCountById(USER_NOT_EXISTS)).isNull();
     }
 }

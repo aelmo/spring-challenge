@@ -36,11 +36,38 @@ public class FollowersServiceImpl implements FollowersService {
             Optional<User> userToBeFollowed = userRepository.findById(userIdFollowed);
 
             if (user.isPresent() && userToBeFollowed.isPresent()) {
-                Followers followers = new Followers(user.get(), userToBeFollowed.get());
-                return followersRepository.save(followers);
+                if (userToBeFollowed.get().getIsSeller()) {
+                    Followers followers = new Followers(user.get(), userToBeFollowed.get());
+                    return followersRepository.save(followers);
+                }
+                logger.error("User is not a seller");
+                return null;
             }
 
             logger.error("Users not found");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Long followersCountById(Long userId) {
+        logger.info("Followers Service - Followers Count By Id");
+
+        try {
+            Optional<User> user = userRepository.findById(userId);
+
+            if (user.isPresent()) {
+                if (user.get().getIsSeller())
+                    return followersRepository.followerCountById(userId);
+                logger.error("User is not a seller");
+                return null;
+            }
+
+            logger.error("User not found");
             return null;
         } catch (Exception e) {
             e.printStackTrace();
