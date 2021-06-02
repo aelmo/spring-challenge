@@ -29,4 +29,8 @@ public class Followers {
     @JoinColumn(name = "to_user_fk")
     private User to;
 
+    public Followers(User userFollowing, User userFollowed) {
+        this.from = userFollowing;
+        this.to = userFollowed;
+    }
 }
