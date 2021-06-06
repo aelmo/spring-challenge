@@ -68,7 +68,7 @@ public class UserControllerTest {
                 true,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                new Date(),
+                new ArrayList<>(),
                 new Date()
         );
 
@@ -81,7 +81,7 @@ public class UserControllerTest {
                 false,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                new Date(),
+                new ArrayList<>(),
                 new Date()
         );
 

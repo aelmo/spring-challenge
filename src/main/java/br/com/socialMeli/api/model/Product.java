@@ -10,8 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "post")
 public class Product {
 
     private static final long serialVersionUID = 1L;
@@ -29,9 +28,9 @@ public class Product {
     @Column(name = "type", nullable = false)
     private String type;
 
-    @ManyToOne
-    @JoinColumn(name = "product_brand")
-    private Brand brand;
+    @Basic
+    @Column(name = "brand", nullable = false)
+    private String brand;
 
     @Basic
     @Column(name = "color")
@@ -45,4 +44,11 @@ public class Product {
     @JoinColumn(name = "post_product")
     private Post post;
 
+    public Product(String productName, String type, String brand, String color, String notes) {
+        this.name = productName;
+        this.type = type;
+        this.brand = brand;
+        this.color = color;
+        this.notes = notes;
+    }
 }
