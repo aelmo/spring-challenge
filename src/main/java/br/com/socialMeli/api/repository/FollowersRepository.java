@@ -16,12 +16,14 @@ public interface FollowersRepository extends CrudRepository<Followers, Long> {
 
     Optional<Followers> findById(final Long id);
 
-    @Query(value = "SELECT COUNT(follower) FROM Followers f WHERE f.follower = :id", nativeQuery = true)
+    Optional<Followers> findFollowersByFollowerIdAndFollowedId(@Param("followerId") final Long followerId, @Param("followedId") final Long followedId);
+
+    @Query(value = "SELECT COUNT(followed_user_fk) FROM SocialMeli.Follower f WHERE f.followed_user_fk = :id", nativeQuery = true)
     Long getFollowerCountById(@Param("id") final Long id);
 
-    @Query(value = "SELECT f.follower FROM Followers f WHERE f.follower = :id", nativeQuery = true)
+    @Query(value = "SELECT f.follower_user_fk FROM SocialMeli.Follower f WHERE f.followed_user_fk = :id", nativeQuery = true)
     List<Long> getFollowerListById(@Param("id") final Long id);
 
-    @Query(value = "SELECT f.followed FROM Followers f WHERE f.followed = :id", nativeQuery = true)
+    @Query(value = "SELECT f.followed_user_fk FROM SocialMeli.Follower f WHERE f.follower_user_fk = :id", nativeQuery = true)
     List<Long> getFollowedListById(@Param("id") final Long id);
 }

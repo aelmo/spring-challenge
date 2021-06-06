@@ -1,7 +1,9 @@
 package br.com.socialMeli.api.controller;
 
 import br.com.socialMeli.api.dto.response.*;
+import br.com.socialMeli.api.model.Followers;
 import br.com.socialMeli.api.model.User;
+import br.com.socialMeli.api.repository.FollowersRepository;
 import br.com.socialMeli.api.repository.UserRepository;
 import br.com.socialMeli.api.service.FollowersService;
 import io.swagger.annotations.*;
@@ -22,10 +24,13 @@ public class UserController {
 
     private final UserRepository userRepository;
 
+    private final FollowersRepository followersRepository;
+
     private final FollowersService followersService;
 
-    public UserController(final UserRepository userRepository, final FollowersService followersService) {
+    public UserController(final UserRepository userRepository, final FollowersRepository followersRepository, final FollowersService followersService) {
         this.userRepository = userRepository;
+        this.followersRepository = followersRepository;
         this.followersService = followersService;
     }
 
@@ -43,14 +48,15 @@ public class UserController {
         logger.info("POST - Social Meli - (followUser) User: " + userId + " following User: " + userIdToFollow);
 
         try {
-            Optional<User> user = userRepository.findById(userId);
+            Optional<User> userFollowing = userRepository.findById(userId);
             Optional<User> userToBeFollowed = userRepository.findById(userIdToFollow);
+            Optional<Followers> followExists = followersRepository.findFollowersByFollowerIdAndFollowedId(userId, userIdToFollow);
 
-            if (user.isEmpty())
+            if (userFollowing.isEmpty())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
 
             if (userToBeFollowed.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userIdToFollow), HttpStatus.BAD_REQUEST);
 
             if (userId.equals(userIdToFollow))
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't follow yourself."), HttpStatus.BAD_REQUEST);
@@ -58,9 +64,55 @@ public class UserController {
             if (!userToBeFollowed.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't follow an user that isn't a seller."), HttpStatus.BAD_REQUEST);
 
+            if (followExists.isPresent())
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You already follow this user."), HttpStatus.BAD_REQUEST);
+
             followersService.saveFollow(userId, userIdToFollow);
 
             return new ResponseEntity<>(new FollowersResponseSaveDTO(true, "Follow executed with success!"), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Internal server error: " + e), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "Unfollow user")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User unfollowed with success"),
+            @ApiResponse(code = 400, message = "User not encountered")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that's unfollowing"),
+            @ApiImplicitParam(name = "userIdToFollow", dataType = "int", value = "Id from user that's being unfollowed")
+    })
+    @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity<?> unfollowUser(@PathVariable("userId") Long userId, @PathVariable("userIdToUnfollow") Long userIdToUnfollow) {
+        logger.info("POST - Social Meli - (unfollowUser) User: " + userId + " following User: " + userIdToUnfollow);
+
+        try {
+            Optional<User> userUnfollowing = userRepository.findById(userId);
+            Optional<User> userToBeUnfollowed = userRepository.findById(userIdToUnfollow);
+            Optional<Followers> followExists = followersRepository.findFollowersByFollowerIdAndFollowedId(userId, userIdToUnfollow);
+
+            if (userUnfollowing.isEmpty())
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+
+            if (userToBeUnfollowed.isEmpty())
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userIdToUnfollow), HttpStatus.BAD_REQUEST);
+
+            if (userId.equals(userIdToUnfollow))
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't unfollow yourself."), HttpStatus.BAD_REQUEST);
+
+            if (!userToBeUnfollowed.get().getIsSeller())
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't unfollow an user that isn't a seller."), HttpStatus.BAD_REQUEST);
+
+            if (followExists.isEmpty())
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't unfollow an user that you're not following."), HttpStatus.BAD_REQUEST);
+
+            followersService.saveUnfollow(followExists.get().getId());
+
+            return new ResponseEntity<>(new FollowersResponseSaveDTO(true, "Unfollow executed with success!"), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -108,7 +160,7 @@ public class UserController {
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the list will be made")
     })
     @GetMapping("/{userId}/followers/list")
-    public ResponseEntity<?> getFollowerListForUser(@PathVariable("userId") Long userId) {
+    public ResponseEntity<?> getFollowerListForUser(@PathVariable("userId") Long userId, @RequestParam(required = false) String order) {
         logger.info("GET - Social Meli - (getFollowerListForUser) User: " + userId);
 
         try {
@@ -120,7 +172,7 @@ public class UserController {
             if (!user.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Only users that are sellers can have a list of followers."), HttpStatus.BAD_REQUEST);
 
-            List<UniqueUserFollowerResponseDTO> followers = followersService.getFollowersListById(userId);
+            List<UniqueUserFollowerResponseDTO> followers = followersService.getFollowersListById(userId, order);
 
             return new ResponseEntity<>(new UserFollowersResponseDTO(user.get().getId(), user.get().getName(), followers), HttpStatus.OK);
         } catch (Exception e) {
@@ -139,7 +191,7 @@ public class UserController {
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the list will be made")
     })
     @GetMapping("/{userId}/followed/list")
-    public ResponseEntity<?> getFollowedListForUser(@PathVariable("userId") Long userId) {
+    public ResponseEntity<?> getFollowedListForUser(@PathVariable("userId") Long userId, @RequestParam(required = false) String order) {
         logger.info("GET - Social Meli - (getFollowedListForUser) User: " + userId);
 
         try {
@@ -148,7 +200,7 @@ public class UserController {
             if (user.isEmpty())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
 
-            List<UniqueUserFollowedResponseDTO> followeds = followersService.getFollowedsListById(userId);
+            List<UniqueUserFollowedResponseDTO> followeds = followersService.getFollowedsListById(userId, order);
 
             return new ResponseEntity<>(new UserFollowedsResponseDTO(user.get().getId(), user.get().getName(), followeds), HttpStatus.OK);
         } catch (Exception e) {

@@ -18,7 +18,7 @@ public class Category {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -29,4 +29,7 @@ public class Category {
     @OneToMany(mappedBy = "id")
     private List<Post> posts;
 
+    public Category(String name) {
+        this.name = name;
+    }
 }

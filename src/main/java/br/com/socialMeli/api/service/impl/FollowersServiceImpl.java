@@ -9,6 +9,7 @@ import br.com.socialMeli.api.repository.UserRepository;
 import br.com.socialMeli.api.service.FollowersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,7 +33,7 @@ public class FollowersServiceImpl implements FollowersService {
 
     @Override
     @Transactional
-    public Followers saveFollow(Long userId, Long userIdFollowed) {
+    public Followers saveFollow(final Long userId, final Long userIdFollowed) {
         logger.info("Followers Service - Save Follow");
 
         try {
@@ -58,7 +59,31 @@ public class FollowersServiceImpl implements FollowersService {
     }
 
     @Override
-    public Long getFollowersCountById(Long userId) {
+    @Transactional
+    public ResponseEntity<Object> saveUnfollow(final Long followersId) {
+        logger.info("Followers Service - Save Unfollow");
+
+        try {
+            Optional<Followers> followers = followersRepository.findById(followersId);
+
+            if (followers.isPresent()) {
+                followers.map(record -> {
+                    followersRepository.deleteById(followersId);
+                    return ResponseEntity.ok().build();
+                });
+            }
+
+            logger.error("You can't unfollow someone that you don't follow");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Long getFollowersCountById(final Long userId) {
         logger.info("Followers Service - Get Followers Count By Id");
 
         try {
@@ -81,7 +106,7 @@ public class FollowersServiceImpl implements FollowersService {
     }
 
     @Override
-    public List<UniqueUserFollowerResponseDTO> getFollowersListById(Long userId) {
+    public List<UniqueUserFollowerResponseDTO> getFollowersListById(final Long userId, final String order) {
         logger.info("Followers Service - Get Followers List By Id");
 
         try {
@@ -114,7 +139,7 @@ public class FollowersServiceImpl implements FollowersService {
     }
 
     @Override
-    public List<UniqueUserFollowedResponseDTO> getFollowedsListById(Long userId) {
+    public List<UniqueUserFollowedResponseDTO> getFollowedsListById(final Long userId, final String order) {
         logger.info("Followers Service - Get Followeds List By Id");
 
         try {

@@ -32,6 +32,18 @@ public class SwaggerConfig {
         return apiInfoBuilder;
     }
 
+    private ApiInfoBuilder infoApiV2() {
+        ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
+
+        apiInfoBuilder.title("REST Api - Social Meli");
+        apiInfoBuilder.description("Api for Social Meli - Complements");
+        apiInfoBuilder.version("2.0");
+        apiInfoBuilder.license("Private");
+        apiInfoBuilder.contact(this.contact());
+
+        return apiInfoBuilder;
+    }
+
     @Bean
     public Docket swaggerSocialMeliApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -41,6 +53,18 @@ public class SwaggerConfig {
                 .paths(PathSelectors.ant("/api/v1/**"))
                 .build()
                 .apiInfo(this.infoApi().build())
+                .useDefaultResponseMessages(false);
+    }
+
+    @Bean
+    public Docket swaggerSocialMeliApiV2() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("rest-socialMeli-api-2.0")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("br.com.socialMeli.api.controller.v2"))
+                .paths(PathSelectors.ant("/api/v2/**"))
+                .build()
+                .apiInfo(this.infoApiV2().build())
                 .useDefaultResponseMessages(false);
     }
 }

@@ -5,18 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserFollowedsResponseDTO {
+public class ProductResponseFindDTO {
 
-    private Long userId;
+    private Long productId;
 
-    private String userName;
+    private String productName;
 
-    private List<UniqueUserFollowedResponseDTO> following;
+    private String type;
 
+    private String brand;
+
+    private String color;
+
+    private String notes;
 }
