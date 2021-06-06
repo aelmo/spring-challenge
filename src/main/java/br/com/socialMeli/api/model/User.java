@@ -59,14 +59,12 @@ public class User {
     @OneToMany(mappedBy = "follower")
     private List<Followers> followers;
 
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
     @Basic
     @CreatedDate
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
-
-    @Basic
-    @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private Date updatedAt;
 
 }

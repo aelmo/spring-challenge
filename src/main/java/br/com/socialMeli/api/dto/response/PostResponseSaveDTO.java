@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class PostResponseSaveDTO extends DefaultEntityApiResponseDTO {
 
-    public PostResponseSaveDTO(boolean success, String description, Long id) {
-        super(success, description, id);
+    public PostResponseSaveDTO(boolean success, String description) {
+        super(success, description);
     }
 }

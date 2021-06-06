@@ -67,7 +67,7 @@ public class FollowersServiceTest {
                 true,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                new Date(),
+                new ArrayList<>(),
                 new Date()
         );
 
@@ -80,7 +80,7 @@ public class FollowersServiceTest {
                 false,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                new Date(),
+                new ArrayList<>(),
                 new Date()
         );
 

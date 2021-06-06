@@ -44,4 +44,10 @@ public class Post {
     @OneToMany(mappedBy = "id")
     private List<Product> product;
 
+    public Post(User user, Date date, Category category, Double price) {
+        this.user = user;
+        this.createdAt = date;
+        this.category = category;
+        this.price = price;
+    }
 }
