@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  backendservice:
+    build: ../spring-challenge
+    ports:
+      - "8080:8080"
