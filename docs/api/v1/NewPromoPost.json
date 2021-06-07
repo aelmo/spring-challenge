@@ -1,0 +1,16 @@
+{
+  "category": 0,
+  "details": [
+    {
+      "brand": "string",
+      "color": "string",
+      "notes": "string",
+      "productName": "string",
+      "type": "string"
+    }
+  ],
+  "discount": 0,
+  "hasPromo": true,
+  "price": 0,
+  "userId": 0
+}
