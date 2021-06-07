@@ -37,6 +37,14 @@ public class Post {
     private Double price;
 
     @Basic
+    @Column(name = "hasPromo")
+    private Boolean hasPromo;
+
+    @Basic
+    @Column(name = "discount")
+    private Double discount;
+
+    @Basic
     @CreatedDate
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
@@ -44,10 +52,12 @@ public class Post {
     @OneToMany(mappedBy = "id")
     private List<Product> product;
 
-    public Post(User user, Date date, Category category, Double price) {
+    public Post(User user, Date date, Category category, Double price, Boolean hasPromo, Double discount) {
         this.user = user;
         this.createdAt = date;
         this.category = category;
         this.price = price;
+        this.hasPromo = hasPromo;
+        this.discount = discount;
     }
 }

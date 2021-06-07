@@ -15,4 +15,8 @@ import java.util.List;
 public interface PostRepository extends CrudRepository<Post, Long> {
 
     List<Post> findAllByUserAndCreatedAtBetweenOrderByCreatedAtAsc(@Param("user") final User user, final Date now, final Date twoWeeksEarlier);
+
+    List<Post> getAllByUserAndHasPromo(@Param("user") final User user, @Param("hasPromo") final Boolean hasPromo);
+
+    Long countAllByUserAndHasPromo(@Param("user") final User user, @Param("hasPromo") final Boolean hasPromo);
 }

@@ -2,8 +2,10 @@ package br.com.socialMeli.api.service.impl;
 
 import br.com.socialMeli.api.dto.request.PostRequestDTO;
 import br.com.socialMeli.api.dto.request.ProductRequestDTO;
+import br.com.socialMeli.api.dto.request.PromoPostRequestDTO;
 import br.com.socialMeli.api.dto.response.PostResponseFindDTO;
 import br.com.socialMeli.api.dto.response.ProductResponseFindDTO;
+import br.com.socialMeli.api.dto.response.PromoPostResponseFindDTO;
 import br.com.socialMeli.api.model.Category;
 import br.com.socialMeli.api.model.Post;
 import br.com.socialMeli.api.model.Product;
@@ -46,7 +48,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Post saveNewPost(PostRequestDTO postRequestDTO) {
+    public Post saveNewPost(final PostRequestDTO postRequestDTO) {
         logger.info("Post Service - Save New Post");
 
         try {
@@ -59,7 +61,9 @@ public class PostServiceImpl implements PostService {
                             user.get(),
                             new Date(),
                             category.get(),
-                            postRequestDTO.getPrice()
+                            postRequestDTO.getPrice(),
+                            postRequestDTO.isHasPromo(),
+                            postRequestDTO.getDiscount()
                     );
 
                     List<Product> products = new ArrayList<>();
@@ -101,7 +105,65 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostResponseFindDTO> findPostByFollowed(Long userId) {
+    @Transactional
+    public Post saveNewPromoPost(final PromoPostRequestDTO promoPostRequestDTO) {
+        logger.info("Post Service - Save New Promo Post");
+
+        try {
+            Optional<User> user = userRepository.findById(promoPostRequestDTO.getUserId());
+            Optional<Category> category = categoryRepository.findById(promoPostRequestDTO.getCategory());
+
+            if (user.isPresent() && user.get().getIsSeller()) {
+                if (category.isPresent()) {
+                    Post newPost = new Post(
+                            user.get(),
+                            new Date(),
+                            category.get(),
+                            promoPostRequestDTO.getPrice(),
+                            promoPostRequestDTO.isHasPromo(),
+                            promoPostRequestDTO.getDiscount()
+                    );
+
+                    List<Product> products = new ArrayList<>();
+
+                    for (ProductRequestDTO productDTO : promoPostRequestDTO.getDetails()) {
+                        Product product = new Product(
+                                productDTO.getProductName(),
+                                productDTO.getType(),
+                                productDTO.getBrand(),
+                                productDTO.getColor(),
+                                productDTO.getNotes()
+                        );
+
+                        productRepository.save(product);
+
+                        products.add(product);
+                    }
+
+                    newPost.setProduct(products);
+
+                    Post post = postRepository.save(newPost);
+
+                    for (Product product : products)
+                        productService.assignToPostById(product, post.getId());
+
+                    return post;
+                }
+                logger.error("Category not found");
+                return null;
+            }
+
+            logger.error("User not found/User is not a seller");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<PostResponseFindDTO> findPostByFollowed(final Long userId) {
         logger.info("Post Service - Find Post By Followed");
 
         try {
@@ -146,6 +208,73 @@ public class PostServiceImpl implements PostService {
             }
 
             logger.error("User not found");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<PromoPostResponseFindDTO> findPromoPostByUser(final User user) {
+        logger.info("Post Service - Find Promo Post By User");
+
+        try {
+            if (user.getIsSeller()) {
+                List<Post> posts = postRepository.getAllByUserAndHasPromo(user, true);
+                if (posts.size() > 0) {
+                    List<PromoPostResponseFindDTO> promoPostResponseFindDTOS = new ArrayList<>();
+                    for (Post post : posts) {
+                        List<ProductResponseFindDTO> productResponseFindDTOS = new ArrayList<>();
+                        for (Product product : post.getProduct()) {
+                            ProductResponseFindDTO productResponseFindDTO = new ProductResponseFindDTO(
+                                    product.getId(),
+                                    product.getName(),
+                                    product.getType(),
+                                    product.getBrand(),
+                                    product.getColor(),
+                                    product.getNotes()
+                            );
+
+                            productResponseFindDTOS.add(productResponseFindDTO);
+                        }
+
+                        PromoPostResponseFindDTO promoPostResponseFindDTO = new PromoPostResponseFindDTO(
+                                post.getId(),
+                                post.getCreatedAt(),
+                                productResponseFindDTOS,
+                                post.getCategory().getId(),
+                                post.getPrice(),
+                                post.getHasPromo(),
+                                post.getDiscount()
+                        );
+
+                        promoPostResponseFindDTOS.add(promoPostResponseFindDTO);
+                    }
+                    return promoPostResponseFindDTOS;
+                }
+            }
+
+            logger.error("User is not a seller");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Long countPostsByUser(final User user) {
+        logger.info("Post Service - Count Posts By User");
+
+        try {
+            if (user.getIsSeller()) {
+                return postRepository.countAllByUserAndHasPromo(user, true);
+            }
+
+            logger.error("User is not a seller");
             return null;
         } catch (Exception e) {
             e.printStackTrace();

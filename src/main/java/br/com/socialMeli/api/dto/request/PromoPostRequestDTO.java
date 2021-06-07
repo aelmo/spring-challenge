@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostRequestDTO {
+public class PromoPostRequestDTO {
 
     @NotBlank(message = "The userId is mandatory.")
     private Long userId;
@@ -25,8 +25,8 @@ public class PostRequestDTO {
     @NotBlank(message = "The price is mandatory")
     private Double price;
 
-    private final boolean hasPromo = false;
+    private final boolean hasPromo = true;
 
-    private final double discount = 0.0D;
+    private Double discount;
 
 }

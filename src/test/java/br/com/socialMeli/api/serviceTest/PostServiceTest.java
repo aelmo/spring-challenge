@@ -125,7 +125,9 @@ public class PostServiceTest {
                 userMock,
                 new Date(),
                 categoryMock,
-                500D
+                500D,
+                true,
+                0.0D
         );
 
         productMock = new Product(
