@@ -14,13 +14,17 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FollowersServiceImpl implements FollowersService {
 
     private static final Logger logger = LoggerFactory.getLogger(FollowersServiceImpl.class);
+
+    private static final List<String> validOrderers = new ArrayList<>(List.of("name_asc", "desc_asc", "date_asc", "date_desc"));
 
     private final UserRepository userRepository;
 
@@ -106,7 +110,7 @@ public class FollowersServiceImpl implements FollowersService {
     }
 
     @Override
-    public List<UniqueUserFollowerResponseDTO> getFollowersListById(final Long userId, final String order) {
+    public List<UniqueUserFollowerResponseDTO> getFollowersListById(final Long userId) {
         logger.info("Followers Service - Get Followers List By Id");
 
         try {
@@ -119,7 +123,7 @@ public class FollowersServiceImpl implements FollowersService {
                     for (Long id : followersId) {
                         Optional<User> userFound = userRepository.findById(id);
                         if (userFound.isPresent()) {
-                            UniqueUserFollowerResponseDTO uniqueUser = new UniqueUserFollowerResponseDTO(userFound.get().getId(), userFound.get().getName());
+                            UniqueUserFollowerResponseDTO uniqueUser = new UniqueUserFollowerResponseDTO(userFound.get().getId(), userFound.get().getName(), userFound.get().getCreatedAt());
                             followerList.add(uniqueUser);
                         }
                     }
@@ -139,7 +143,7 @@ public class FollowersServiceImpl implements FollowersService {
     }
 
     @Override
-    public List<UniqueUserFollowedResponseDTO> getFollowedsListById(final Long userId, final String order) {
+    public List<UniqueUserFollowedResponseDTO> getFollowedsListById(final Long userId) {
         logger.info("Followers Service - Get Followeds List By Id");
 
         try {
@@ -152,7 +156,7 @@ public class FollowersServiceImpl implements FollowersService {
                     for (Long id : followedsId) {
                         Optional<User> userFound = userRepository.findById(id);
                         if (userFound.isPresent()) {
-                            UniqueUserFollowedResponseDTO uniqueUser = new UniqueUserFollowedResponseDTO(userFound.get().getId(), userFound.get().getName());
+                            UniqueUserFollowedResponseDTO uniqueUser = new UniqueUserFollowedResponseDTO(userFound.get().getId(), userFound.get().getName(), userFound.get().getCreatedAt());
                             followedsList.add(uniqueUser);
                         }
                     }
@@ -169,5 +173,37 @@ public class FollowersServiceImpl implements FollowersService {
             logger.error(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<UniqueUserFollowerResponseDTO> sortFollowerListByOrder(List<UniqueUserFollowerResponseDTO> followerResponseDTOList, String order) {
+        if (validOrderers.contains(order)) {
+            if (order.equals("name_desc"))
+                return followerResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowerResponseDTO::getUserName).reversed()).collect(Collectors.toList());
+            if (order.equals("name_asc"))
+                return followerResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowerResponseDTO::getUserName)).collect(Collectors.toList());
+            if (order.equals("date_asc"))
+                return followerResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowerResponseDTO::getCreatedAt).reversed()).collect(Collectors.toList());
+            if (order.equals("date_desc"))
+                return followerResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowerResponseDTO::getCreatedAt)).collect(Collectors.toList());
+        }
+        logger.error("Order parameter is not valid");
+        return followerResponseDTOList;
+    }
+
+    @Override
+    public List<UniqueUserFollowedResponseDTO> sortFollowedListByOrder(List<UniqueUserFollowedResponseDTO> followedResponseDTOList, String order) {
+        if (validOrderers.contains(order)) {
+            if (order.equals("name_desc"))
+                return followedResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowedResponseDTO::getUserName).reversed()).collect(Collectors.toList());
+            if (order.equals("name_asc"))
+                return followedResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowedResponseDTO::getUserName)).collect(Collectors.toList());
+            if (order.equals("date_asc"))
+                return followedResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowedResponseDTO::getCreatedAt).reversed()).collect(Collectors.toList());
+            if (order.equals("date_desc"))
+                return followedResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowedResponseDTO::getCreatedAt)).collect(Collectors.toList());
+        }
+        logger.error("Order parameter is not valid");
+        return followedResponseDTOList;
     }
 }
