@@ -1,5 +1,6 @@
 package br.com.socialMeli.api.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,10 @@ public class PostRequestDTO {
     @NotBlank(message = "The price is mandatory")
     private Double price;
 
+    @JsonIgnore
     private final boolean hasPromo = false;
 
+    @JsonIgnore
     private final double discount = 0.0D;
 
 }
