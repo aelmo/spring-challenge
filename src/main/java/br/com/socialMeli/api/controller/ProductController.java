@@ -62,7 +62,7 @@ public class ProductController {
 
             postService.saveNewPost(postRequestDTO);
 
-            return new ResponseEntity<>(new PostResponseSaveDTO(true, "Post created with success!"), HttpStatus.OK);
+            return new ResponseEntity<>(new PostResponseSaveDTO(true, "Post created with success!"), HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -95,7 +95,7 @@ public class ProductController {
 
             postService.saveNewPromoPost(promoPostRequestDTO);
 
-            return new ResponseEntity<>(new PostResponseSaveDTO(true, "Promo post created with success!"), HttpStatus.OK);
+            return new ResponseEntity<>(new PostResponseSaveDTO(true, "Promo post created with success!"), HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -112,7 +112,7 @@ public class ProductController {
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the search will be made")
     })
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity<?> getPostsFromFollowedSellers(@PathVariable("userId") Long userId) {
+    public ResponseEntity<?> getPostsFromFollowedSellers(@PathVariable("userId") final Long userId) {
         logger.info("GET - Social Meli - (getPostsFromFollowedSellers) User: " + userId);
 
         try {
@@ -140,7 +140,7 @@ public class ProductController {
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the search will be made")
     })
     @GetMapping("/{userId}/list")
-    public ResponseEntity<?> getPromoPostsFromUser(@PathVariable("userId") Long userId) {
+    public ResponseEntity<?> getPromoPostsFromUser(@PathVariable("userId") final Long userId) {
         logger.info("GET - Social Meli - (getPromoPostsFromUser) User: " + userId);
 
         try {

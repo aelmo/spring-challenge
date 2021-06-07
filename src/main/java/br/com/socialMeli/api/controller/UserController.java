@@ -44,7 +44,7 @@ public class UserController {
             @ApiImplicitParam(name = "userIdToFollow", dataType = "int", value = "Id from user that's being followed")
     })
     @PostMapping("/{userId}/follow/{userIdToFollow}")
-    public ResponseEntity<?> followUser(@PathVariable("userId") Long userId, @PathVariable("userIdToFollow") Long userIdToFollow) {
+    public ResponseEntity<?> followUser(@PathVariable("userId") final Long userId, @PathVariable("userIdToFollow") final Long userIdToFollow) {
         logger.info("POST - Social Meli - (followUser) User: " + userId + " following User: " + userIdToFollow);
 
         try {
@@ -87,7 +87,7 @@ public class UserController {
             @ApiImplicitParam(name = "userIdToFollow", dataType = "int", value = "Id from user that's being unfollowed")
     })
     @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
-    public ResponseEntity<?> unfollowUser(@PathVariable("userId") Long userId, @PathVariable("userIdToUnfollow") Long userIdToUnfollow) {
+    public ResponseEntity<?> unfollowUser(@PathVariable("userId") final Long userId, @PathVariable("userIdToUnfollow") final Long userIdToUnfollow) {
         logger.info("POST - Social Meli - (unfollowUser) User: " + userId + " following User: " + userIdToUnfollow);
 
         try {
@@ -129,7 +129,7 @@ public class UserController {
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the count will be made")
     })
     @GetMapping("/{userId}/followers/count")
-    public ResponseEntity<?> getFollowerCountForUser(@PathVariable("userId") Long userId) {
+    public ResponseEntity<?> getFollowerCountForUser(@PathVariable("userId") final Long userId) {
         logger.info("GET - Social Meli - (getFollowerCountForUser) User: " + userId);
 
         try {
@@ -160,7 +160,7 @@ public class UserController {
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the list will be made")
     })
     @GetMapping("/{userId}/followers/list")
-    public ResponseEntity<?> getFollowerListForUser(@PathVariable("userId") Long userId, @RequestParam(required = false) String order) {
+    public ResponseEntity<?> getFollowerListForUser(@PathVariable("userId") final Long userId, @RequestParam(required = false) final String order) {
         logger.info("GET - Social Meli - (getFollowerListForUser) User: " + userId);
 
         try {
@@ -192,7 +192,7 @@ public class UserController {
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the list will be made")
     })
     @GetMapping("/{userId}/followed/list")
-    public ResponseEntity<?> getFollowedListForUser(@PathVariable("userId") Long userId, @RequestParam(required = false) String order) {
+    public ResponseEntity<?> getFollowedListForUser(@PathVariable("userId") final Long userId, @RequestParam(required = false) final String order) {
         logger.info("GET - Social Meli - (getFollowedListForUser) User: " + userId);
 
         try {

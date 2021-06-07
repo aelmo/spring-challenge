@@ -2,6 +2,7 @@ package br.com.socialMeli.api.serviceTest;
 
 import br.com.socialMeli.api.dto.request.PostRequestDTO;
 import br.com.socialMeli.api.dto.request.ProductRequestDTO;
+import br.com.socialMeli.api.dto.request.PromoPostRequestDTO;
 import br.com.socialMeli.api.model.Category;
 import br.com.socialMeli.api.model.Post;
 import br.com.socialMeli.api.model.Product;
@@ -65,10 +66,13 @@ public class PostServiceTest {
     private Product productMock;
 
     @Mock
-    private PostRequestDTO postRequestMock;
+    private PostRequestDTO postRequestDTOMock;
 
     @Mock
-    private ProductRequestDTO productRequestMock;
+    private PromoPostRequestDTO promoPostRequestDTOMock;
+
+    @Mock
+    private ProductRequestDTO productRequestDTOMock;
 
     @Mock
     private User userMock;
@@ -104,7 +108,7 @@ public class PostServiceTest {
                 new ArrayList<>()
         );
 
-        productRequestMock = new ProductRequestDTO(
+        productRequestDTOMock = new ProductRequestDTO(
                 "Test",
                 "Test",
                 "Test",
@@ -112,13 +116,21 @@ public class PostServiceTest {
                 "Test"
         );
 
-        productsRequest.add(productRequestMock);
+        productsRequest.add(productRequestDTOMock);
 
-        postRequestMock = new PostRequestDTO(
+        postRequestDTOMock = new PostRequestDTO(
                 USER_SELLER_ID,
                 productsRequest,
                 VALID_CATEGORY_ID,
                 500D
+        );
+
+        promoPostRequestDTOMock = new PromoPostRequestDTO(
+                USER_SELLER_ID,
+                productsRequest,
+                VALID_CATEGORY_ID,
+                500D,
+                0.25D
         );
 
         postMock = new Post(
@@ -152,15 +164,15 @@ public class PostServiceTest {
     public void shouldReturnPostWhenCreatedWithSuccess() {
         logger.info("TEST - Post Service - Save New Post - shouldReturnPostWhenCreatedWithSuccess()");
 
-        assertThat(postService.saveNewPost(postRequestMock)).isSameAs(postRepository.save(postMock));
+        assertThat(postService.saveNewPost(postRequestDTOMock)).isSameAs(postRepository.save(postMock));
     }
 
     @Test
     public void shouldReturnNullWhenUserNotFound() {
         logger.info("TEST - Post Service - Save New Post - shouldReturnNullWhenUserNotFound()");
 
-        postRequestMock.setUserId(USER_NOT_EXISTS);
-        assertThat(postService.saveNewPost(postRequestMock)).isNull();
+        postRequestDTOMock.setUserId(USER_NOT_EXISTS);
+        assertThat(postService.saveNewPost(postRequestDTOMock)).isNull();
     }
 
     @Test
@@ -168,7 +180,7 @@ public class PostServiceTest {
         logger.info("TEST - Post Service - Save New Post - shouldReturnNullWhenUserNotSeller()");
 
         userMock.setIsSeller(false);
-        assertThat(postService.saveNewPost(postRequestMock)).isNull();
+        assertThat(postService.saveNewPost(postRequestDTOMock)).isNull();
     }
 
     @Test
@@ -176,6 +188,37 @@ public class PostServiceTest {
         logger.info("TEST - Post Service - Save New Post - shouldReturnNullWhenCategoryNotFound()");
 
         categoryMock.setId(CATEGORY_NOT_EXISTS);
-        assertThat(postService.saveNewPost(postRequestMock)).isNull();
+        assertThat(postService.saveNewPost(postRequestDTOMock)).isNull();
+    }
+
+    @Test
+    public void shouldReturnPromoPostWhenCreatedWithSuccess() {
+        logger.info("TEST - Post Service - Save New Promo Post - shouldReturnPromoPostWhenCreatedWithSuccess()");
+
+        assertThat(postService.saveNewPromoPost(promoPostRequestDTOMock)).isSameAs(postRepository.save(postMock));
+    }
+
+    @Test
+    public void shouldReturnNullWhenUserNotFoundPromoPost() {
+        logger.info("TEST - Post Service - Save New Promo Post - shouldReturnNullWhenUserNotFoundPromoPost()");
+
+        promoPostRequestDTOMock.setUserId(USER_NOT_EXISTS);
+        assertThat(postService.saveNewPromoPost(promoPostRequestDTOMock)).isNull();
+    }
+
+    @Test
+    public void shouldReturnNullWhenUserNotSellerPromoPost() {
+        logger.info("TEST - Post Service - Save New Promo Post - shouldReturnNullWhenUserNotSellerPromoPost()");
+
+        userMock.setIsSeller(false);
+        assertThat(postService.saveNewPromoPost(promoPostRequestDTOMock)).isNull();
+    }
+
+    @Test
+    public void shouldReturnNullWhenCategoryNotFoundPromoPost() {
+        logger.info("TEST - Post Service - Save New Promo Post - shouldReturnNullWhenCategoryNotFoundPromoPost()");
+
+        categoryMock.setId(CATEGORY_NOT_EXISTS);
+        assertThat(postService.saveNewPromoPost(promoPostRequestDTOMock)).isNull();
     }
 }

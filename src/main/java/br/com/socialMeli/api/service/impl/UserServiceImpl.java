@@ -24,12 +24,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User createNewUser(UserRequestDTO userDTO) {
+    public User createNewUser(final UserRequestDTO userDTO) {
         logger.info("User Service - Create New User");
 
         try {
-            String email = userDTO.getEmail();
-            String cpf = userDTO.getCpf();
+            final String email = userDTO.getEmail();
+            final String cpf = userDTO.getCpf();
 
             if (userRepository.existsByEmail(email)) {
                 logger.error("Email already registered");

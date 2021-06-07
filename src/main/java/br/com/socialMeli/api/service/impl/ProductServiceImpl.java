@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ResponseEntity<Product> assignToPostById(Product product, Long postToAssign) {
+    public ResponseEntity<Product> assignToPostById(final Product product, final Long postToAssign) {
         logger.info("Product Service - Assign To Post By Id");
 
         Optional<Post> post = postRepository.findById(postToAssign);
