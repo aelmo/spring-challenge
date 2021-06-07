@@ -172,9 +172,10 @@ public class UserController {
             if (!user.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Only users that are sellers can have a list of followers."), HttpStatus.BAD_REQUEST);
 
-            List<UniqueUserFollowerResponseDTO> followers = followersService.getFollowersListById(userId, order);
+            List<UniqueUserFollowerResponseDTO> followers = followersService.getFollowersListById(userId);
+            List<UniqueUserFollowerResponseDTO> followersOrdered = followersService.sortFollowerListByOrder(followers, order);
 
-            return new ResponseEntity<>(new UserFollowersResponseDTO(user.get().getId(), user.get().getName(), followers), HttpStatus.OK);
+            return new ResponseEntity<>(new UserFollowersResponseDTO(user.get().getId(), user.get().getName(), followersOrdered), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -200,9 +201,10 @@ public class UserController {
             if (user.isEmpty())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
 
-            List<UniqueUserFollowedResponseDTO> followeds = followersService.getFollowedsListById(userId, order);
+            List<UniqueUserFollowedResponseDTO> followeds = followersService.getFollowedsListById(userId);
+            List<UniqueUserFollowedResponseDTO> followedsOrdered = followersService.sortFollowedListByOrder(followeds, order);
 
-            return new ResponseEntity<>(new UserFollowedsResponseDTO(user.get().getId(), user.get().getName(), followeds), HttpStatus.OK);
+            return new ResponseEntity<>(new UserFollowedsResponseDTO(user.get().getId(), user.get().getName(), followedsOrdered), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());

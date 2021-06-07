@@ -15,7 +15,11 @@ public interface FollowersService {
 
     Long getFollowersCountById(final Long userId);
 
-    List<UniqueUserFollowerResponseDTO> getFollowersListById(final Long userId, final String order);
+    List<UniqueUserFollowerResponseDTO> getFollowersListById(final Long userId);
 
-    List<UniqueUserFollowedResponseDTO> getFollowedsListById(final Long userId, final String order);
+    List<UniqueUserFollowedResponseDTO> getFollowedsListById(final Long userId);
+
+    List<UniqueUserFollowerResponseDTO> sortFollowerListByOrder(List<UniqueUserFollowerResponseDTO> followerResponseDTOList, String order);
+
+    List<UniqueUserFollowedResponseDTO> sortFollowedListByOrder(List<UniqueUserFollowedResponseDTO> followedResponseDTOList, String order);
 }
