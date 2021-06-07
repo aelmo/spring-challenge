@@ -44,7 +44,7 @@ public class CrudUserController {
     })
     @PostMapping("/newUser")
     public ResponseEntity<?> createNewUser(@ApiParam(value = "Object for new User", required = true)
-                                           @Valid @RequestBody UserRequestDTO user) {
+                                           @Valid @RequestBody final UserRequestDTO user) {
         logger.info("POST - Social Meli (v2) - (createNewUser) User: " + user);
 
         try {

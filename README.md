@@ -8,6 +8,7 @@
 - H2
 - Swagger
 - JUnit
+- Docker
 
 # API's
 

@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public Category createNewCategory(CategoryRequestDTO categoryDTO) {
+    public Category createNewCategory(final CategoryRequestDTO categoryDTO) {
         logger.info("Category Service - Create New Category");
 
         try {
