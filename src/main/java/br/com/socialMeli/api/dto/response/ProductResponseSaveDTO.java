@@ -1,13 +1,19 @@
 package br.com.socialMeli.api.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductResponseSaveDTO extends DefaultEntityApiResponseDTO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductResponseSaveDTO {
 
-    public ProductResponseSaveDTO(boolean success, String description, Long id) {
-        super(success, description, id);
-    }
+    private boolean success;
+
+    private String description;
+
+    private Long id;
 }

@@ -2,26 +2,23 @@ package br.com.socialMeli.api.controller;
 
 import br.com.socialMeli.api.dto.request.PostRequestDTO;
 import br.com.socialMeli.api.dto.response.DefaultApiResponseDTO;
+import br.com.socialMeli.api.dto.response.PostByUserResponseDTO;
+import br.com.socialMeli.api.dto.response.PostResponseFindDTO;
 import br.com.socialMeli.api.dto.response.PostResponseSaveDTO;
 import br.com.socialMeli.api.model.Category;
 import br.com.socialMeli.api.model.User;
 import br.com.socialMeli.api.repository.CategoryRepository;
 import br.com.socialMeli.api.repository.UserRepository;
 import br.com.socialMeli.api.service.PostService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -68,6 +65,34 @@ public class ProductController {
             postService.saveNewPost(postRequestDTO);
 
             return new ResponseEntity<>(new PostResponseSaveDTO(true, "Post created with success!"), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Internal server error: " + e), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "Get posts from followed sellers for user")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Posts returned with success"),
+            @ApiResponse(code = 400, message = "User not encountered")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the search will be made")
+    })
+    @GetMapping("/followed/{userId}/list")
+    public ResponseEntity<?> getPostsFromFollowedSellers(@PathVariable("userId") Long userId) {
+        logger.info("GET - Social Meli - (getPostsFromFollowedSellers) User: " + userId);
+
+        try {
+            Optional<User> user = userRepository.findById(userId);
+
+            if (user.isEmpty())
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+
+            List<PostResponseFindDTO> postsFound = postService.findPostByFollowed(userId);
+
+            return new ResponseEntity<>(new PostByUserResponseDTO(userId, postsFound), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());

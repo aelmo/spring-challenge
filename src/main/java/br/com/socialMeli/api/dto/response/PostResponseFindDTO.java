@@ -5,18 +5,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserFollowedsResponseDTO {
+public class PostResponseFindDTO {
 
-    private Long userId;
+    private Long idPost;
 
-    private String userName;
+    private Date date;
 
-    private List<UniqueUserFollowedResponseDTO> following;
+    private List<ProductResponseFindDTO> detail;
 
+    private Long category;
+
+    private Double price;
 }

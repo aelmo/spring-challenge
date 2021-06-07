@@ -11,12 +11,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserFollowedsResponseDTO {
+public class PostByUserResponseDTO {
 
     private Long userId;
 
-    private String userName;
-
-    private List<UniqueUserFollowedResponseDTO> following;
-
+    private List<PostResponseFindDTO> posts;
 }

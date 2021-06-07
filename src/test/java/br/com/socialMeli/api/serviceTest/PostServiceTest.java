@@ -6,10 +6,7 @@ import br.com.socialMeli.api.model.Category;
 import br.com.socialMeli.api.model.Post;
 import br.com.socialMeli.api.model.Product;
 import br.com.socialMeli.api.model.User;
-import br.com.socialMeli.api.repository.CategoryRepository;
-import br.com.socialMeli.api.repository.PostRepository;
-import br.com.socialMeli.api.repository.ProductRepository;
-import br.com.socialMeli.api.repository.UserRepository;
+import br.com.socialMeli.api.repository.*;
 import br.com.socialMeli.api.service.ProductService;
 import br.com.socialMeli.api.service.impl.PostServiceImpl;
 import org.junit.Before;
@@ -56,6 +53,9 @@ public class PostServiceTest {
     private CategoryRepository categoryRepository;
 
     @Mock
+    private FollowersRepository followersRepository;
+
+    @Mock
     private ProductService productService;
 
     @Mock
@@ -78,7 +78,7 @@ public class PostServiceTest {
 
     @Before
     public void setup() {
-        postService = new PostServiceImpl(postRepository, userRepository, productRepository, categoryRepository, productService);
+        postService = new PostServiceImpl(postRepository, userRepository, productRepository, categoryRepository, followersRepository, productService);
     }
 
     @Before
@@ -90,7 +90,6 @@ public class PostServiceTest {
                 USER_SELLER_ID,
                 "Joe",
                 "joe@gmail.com",
-                new Date(1999 - 8 - 3),
                 "12345678910",
                 true,
                 new ArrayList<>(),

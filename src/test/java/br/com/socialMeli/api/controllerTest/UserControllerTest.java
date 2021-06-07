@@ -2,6 +2,7 @@ package br.com.socialMeli.api.controllerTest;
 
 import br.com.socialMeli.api.controller.UserController;
 import br.com.socialMeli.api.model.User;
+import br.com.socialMeli.api.repository.FollowersRepository;
 import br.com.socialMeli.api.repository.UserRepository;
 import br.com.socialMeli.api.service.FollowersService;
 import org.junit.Before;
@@ -42,6 +43,9 @@ public class UserControllerTest {
     private UserRepository userRepository;
 
     @Mock
+    private FollowersRepository followersRepository;
+
+    @Mock
     private FollowersService followersService;
 
     @Mock
@@ -52,7 +56,7 @@ public class UserControllerTest {
 
     @Before
     public void setup() {
-        userController = new UserController(userRepository, followersService);
+        userController = new UserController(userRepository, followersRepository, followersService);
     }
 
     @Before
@@ -63,7 +67,6 @@ public class UserControllerTest {
                 1L,
                 "Joe",
                 "joe@gmail.com",
-                new Date(1999 - 8 - 3),
                 "12345678910",
                 true,
                 new ArrayList<>(),
@@ -76,7 +79,6 @@ public class UserControllerTest {
                 2L,
                 "Brandon",
                 "brandon@gmail.com",
-                new Date(2001 - 8 - 3),
                 "12345678910",
                 false,
                 new ArrayList<>(),
@@ -166,7 +168,7 @@ public class UserControllerTest {
     public void shouldShowFollowersListAndReturnOk() {
         logger.info("TEST - GET - Social Meli - (getFollowerListForUser) - shouldShowFollowersListAndReturnOk()");
 
-        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_SELLER_ID);
+        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_SELLER_ID, "");
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_OK);
         assertNotNull(responseEntity.getBody());
@@ -176,7 +178,7 @@ public class UserControllerTest {
     public void shouldNotShowFollowersListIfUserDontExistAndReturnBadRequest() {
         logger.info("TEST - GET - Social Meli - (getFollowerListForUser) - shouldNotShowFollowersListIfUserDontExistAndReturnBadRequest()");
 
-        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_NOT_EXIST_ID);
+        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_NOT_EXIST_ID, "");
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
         assertNotNull(responseEntity.getBody());
@@ -186,7 +188,7 @@ public class UserControllerTest {
     public void shouldNotShowFollowersListIfUserNotSellerAndReturnBadRequest() {
         logger.info("TEST - GET - Social Meli - (getFollowerListForUser) - shouldNotShowFollowersListIfUserNotSellerAndReturnBadRequest()");
 
-        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_NOT_SELLER_ID);
+        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_NOT_SELLER_ID, "");
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
         assertNotNull(responseEntity.getBody());
@@ -196,7 +198,7 @@ public class UserControllerTest {
     public void shouldShowFollowedsListAndReturnOk() {
         logger.info("TEST - GET - Social Meli - (getFollowedListForUser) - shouldShowFollowedsListAndReturnOk()");
 
-        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_SELLER_ID);
+        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_SELLER_ID, "");
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_OK);
         assertNotNull(responseEntity.getBody());
@@ -206,7 +208,7 @@ public class UserControllerTest {
     public void shouldNotShowFollowedsListIfUserDontExistAndReturnBadRequest() {
         logger.info("TEST - GET - Social Meli - (getFollowedListForUser) - shouldNotShowFollowedsListIfUserDontExistAndReturnBadRequest()");
 
-        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_NOT_EXIST_ID);
+        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_NOT_EXIST_ID, "");
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
         assertNotNull(responseEntity.getBody());
@@ -216,7 +218,7 @@ public class UserControllerTest {
     public void shouldNotShowFollowedsListIfUserNotSellerAndReturnBadRequest() {
         logger.info("TEST - GET - Social Meli - (getFollowedListForUser) - shouldNotShowFollowedsListIfUserNotSellerAndReturnBadRequest()");
 
-        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_NOT_SELLER_ID);
+        ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_NOT_SELLER_ID, "");
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
         assertNotNull(responseEntity.getBody());
