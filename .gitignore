@@ -25,6 +25,7 @@ _site/
 activemq-data
 bin
 build
+socialMeliLog
 !/**/src/**/bin
 !/**/src/**/build
 build.log

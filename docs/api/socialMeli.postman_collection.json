@@ -1,0 +1,1858 @@
+{
+	"info": {
+		"_postman_id": "b2419e0c-4f88-47b9-83f3-8c3325a4fc1e",
+		"name": "MELI - Desafio Spring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v1 - Requisitos Obrigatórios",
+			"item": [
+				{
+					"name": "Validações",
+					"item": [
+						{
+							"name": "US01 - Follow certain seller - Wrong ID (User to be followed)",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/1/follow/2000",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"1",
+										"follow",
+										"2000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US01 - Follow certain seller - Wrong ID (User following)",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/2000/follow/2",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"2000",
+										"follow",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US01 - Follow certain seller - Not Seller",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/1/follow/3",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"1",
+										"follow",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US01 - Follow certain seller - Follow same ID",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/1/follow/1",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"1",
+										"follow",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US02 - Follower Count - Wrong ID",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/2000/followers/count",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"2000",
+										"followers",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US02 - Follower Count - Not Seller",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/3/followers/count",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"3",
+										"followers",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US03 - Who Follows Me? - Wrong ID",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/2000/followers/list",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"2000",
+										"followers",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US03 - Who Follows Me? - Not Seller",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/3/followers/list",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"3",
+										"followers",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US04 - Who do I Follow? - Wrong ID",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/2000/followed/list",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"2000",
+										"followed",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US05 -  Create a new Post - Wrong User ID",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"category\": 1,\n  \"details\": [\n    {\n      \"brand\": \"Nike\",\n      \"color\": \"Black\",\n      \"notes\": \"New product\",\n      \"productName\": \"Air Max\",\n      \"type\": \"Shoe\"\n    }\n  ],\n  \"price\": 350,\n  \"userId\": 2000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/newPost",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"newPost"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US05 -  Create a new Post - Wrong Category ID",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"category\": 2000,\n  \"details\": [\n    {\n      \"brand\": \"Nike\",\n      \"color\": \"Black\",\n      \"notes\": \"New product\",\n      \"productName\": \"Air Max\",\n      \"type\": \"Shoe\"\n    }\n  ],\n  \"price\": 350,\n  \"userId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/newPost",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"newPost"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US05 -  Create a new Post - Not Seller",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"category\": 1,\n  \"details\": [\n    {\n      \"brand\": \"Nike\",\n      \"color\": \"Black\",\n      \"notes\": \"New product\",\n      \"productName\": \"Air Max\",\n      \"type\": \"Shoe\"\n    }\n  ],\n  \"price\": 350,\n  \"userId\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/newPost",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"newPost"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US06 - Get post from followed sellers - Wrong User ID",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/followed/2000/list",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"followed",
+										"2000",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US07 - Unfollow certain seller - Wrong ID (User to be followed)",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/1/unfollow/2000",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"1",
+										"unfollow",
+										"2000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US07 - Unfollow certain seller - Wrong ID (User following)",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/2000/unfollow/2",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"2000",
+										"unfollow",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US07- Unfollow certain seller - Not Seller",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/1/unfollow/3",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"1",
+										"unfollow",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US07 - Unfollow certain seller - Unfollow same ID",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/user/1/unfollow/1",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"1",
+										"unfollow",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "US01 - Follow certain seller",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/1/follow/2",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"1",
+								"follow",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US02 - Follower Count",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/2/followers/count",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"2",
+								"followers",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US03 - Who Follows Me?",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/2/followers/list",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"2",
+								"followers",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US04 - Who do I Follow?",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/1/followed/list",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"1",
+								"followed",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US05 -  Create a new Post",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category\": 1,\n  \"details\": [\n    {\n      \"brand\": \"Nike\",\n      \"color\": \"Black\",\n      \"notes\": \"New product\",\n      \"productName\": \"Air Max\",\n      \"type\": \"Shoe\"\n    }\n  ],\n  \"price\": 350,\n  \"userId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/api/v1/products/newPost",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"newPost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US06 - Get post from followed sellers",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/products/followed/1/list",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"followed",
+								"1",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US07 - Unfollow certain seller",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/1/unfollow/2",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"1",
+								"unfollow",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US08 - Who Follows Me? - Order ASC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/2/followers/list?order=name_asc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"2",
+								"followers",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "name_asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US08 - Who Follows Me? - Order DESC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/2/followers/list?order=name_desc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"2",
+								"followers",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "name_desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US08 - Who do I Follow? - Order ASC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/1/followed/list?order=name_asc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"1",
+								"followed",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "name_asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US08 - Who do I Follow? - Order DESC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/1/followed/list?order=name_desc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"1",
+								"followed",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "name_desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US08 - Who Follows Me? - Date Order ASC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/2/followers/list?order=date_asc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"2",
+								"followers",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "date_asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US08 - Who Follows Me? - Date Order DESC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/2/followers/list?order=date_desc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"2",
+								"followers",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "date_desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US08 - Who do I Follow? - Date Order ASC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/2/followed/list?order=date_asc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"2",
+								"followed",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "date_asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US08 - Who do I Follow? - Date Order DESC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/user/2/followed/list?order=date_desc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"2",
+								"followed",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "date_desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US09 - Get post from followed sellers - Order ASC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/products/followed/1/list?order=date_asc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"followed",
+								"1",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "date_asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US09 - Get post from followed sellers - Order DESC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/products/followed/1/list?order=date_desc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"followed",
+								"1",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "date_desc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "v1 - Requisitos Bônus",
+			"item": [
+				{
+					"name": "Validações",
+					"item": [
+						{
+							"name": "US10 -  Create a new Promo Post - Wrong User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"category\": 1,\n  \"details\": [\n    {\n      \"brand\": \"Nike\",\n      \"color\": \"Black\",\n      \"notes\": \"New product\",\n      \"productName\": \"Air Max\",\n      \"type\": \"Shoe\"\n    }\n  ],\n  \"price\": 350,\n  \"hasPromo\": true,\n  \"discount\": 0.25,\n  \"userId\": 2000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/newPromoPost",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"newPromoPost"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US10 -  Create a new Promo Post - Wrong Category",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"category\": 2000,\n  \"details\": [\n    {\n      \"brand\": \"Nike\",\n      \"color\": \"Black\",\n      \"notes\": \"New product\",\n      \"productName\": \"Air Max\",\n      \"type\": \"Shoe\"\n    }\n  ],\n  \"price\": 350,\n  \"hasPromo\": true,\n  \"discount\": 0.25,\n  \"userId\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/newPromoPost",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"newPromoPost"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US10 -  Create a new Promo Post - Not Seller",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"category\": 1,\n  \"details\": [\n    {\n      \"brand\": \"Nike\",\n      \"color\": \"Black\",\n      \"notes\": \"New product\",\n      \"productName\": \"Air Max\",\n      \"type\": \"Shoe\"\n    }\n  ],\n  \"price\": 350,\n  \"hasPromo\": true,\n  \"discount\": 0.25,\n  \"userId\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/newPromoPost",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"newPromoPost"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US11 - Post Count By User - Wrong User ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/2000/countPromo",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"2000",
+										"countPromo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US11 - Post Count By User - Not Seller",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/3/countPromo",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"3",
+										"countPromo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US12 - Promo posts by User - Wrong User ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/2000/list",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"2000",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "US12 - Promo posts by User - Not Seller",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localhost}}/api/v1/products/3/list",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"3",
+										"list"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "US10 -  Create a new Promo Post",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category\": 1,\n  \"details\": [\n    {\n      \"brand\": \"Nike\",\n      \"color\": \"Black\",\n      \"notes\": \"New product\",\n      \"productName\": \"Air Max\",\n      \"type\": \"Shoe\"\n    }\n  ],\n  \"price\": 350,\n  \"hasPromo\": true,\n  \"discount\": 0.25,\n  \"userId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/api/v1/products/newPromoPost",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"newPromoPost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US11 - Post Count By User",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/products/2/countPromo",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"2",
+								"countPromo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US12 - Promo posts by User",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/products/2/list",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"2",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "v2 - Complementares",
+			"item": [
+				{
+					"name": "Create",
+					"item": [
+						{
+							"name": "User",
+							"item": [
+								{
+									"name": "Create new User",
+									"request": {
+										"auth": {
+											"type": "basic",
+											"basic": [
+												{
+													"key": "password",
+													"value": "elmo",
+													"type": "string"
+												},
+												{
+													"key": "username",
+													"value": "amedeo",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"12345678910\",\n  \"email\": \"teste@email.com\",\n  \"isSeller\": true,\n  \"name\": \"Carlos\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{localhost}}/api/v2/user/newUser",
+											"host": [
+												"{{localhost}}"
+											],
+											"path": [
+												"api",
+												"v2",
+												"user",
+												"newUser"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create new User 2",
+									"request": {
+										"auth": {
+											"type": "basic",
+											"basic": [
+												{
+													"key": "password",
+													"value": "elmo",
+													"type": "string"
+												},
+												{
+													"key": "username",
+													"value": "amedeo",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"12345678911\",\n  \"email\": \"teste2@email.com\",\n  \"isSeller\": true,\n  \"name\": \"Bruno\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{localhost}}/api/v2/user/newUser",
+											"host": [
+												"{{localhost}}"
+											],
+											"path": [
+												"api",
+												"v2",
+												"user",
+												"newUser"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create new User 3 (Not Seller)",
+									"request": {
+										"auth": {
+											"type": "basic",
+											"basic": [
+												{
+													"key": "password",
+													"value": "elmo",
+													"type": "string"
+												},
+												{
+													"key": "username",
+													"value": "amedeo",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"cpf\": \"12345678912\",\n  \"email\": \"teste3@email.com\",\n  \"isSeller\": false,\n  \"name\": \"Amedeo\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{localhost}}/api/v2/user/newUser",
+											"host": [
+												"{{localhost}}"
+											],
+											"path": [
+												"api",
+												"v2",
+												"user",
+												"newUser"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Category",
+							"item": [
+								{
+									"name": "Create new Category",
+									"request": {
+										"auth": {
+											"type": "basic",
+											"basic": [
+												{
+													"key": "password",
+													"value": "elmo",
+													"type": "string"
+												},
+												{
+													"key": "username",
+													"value": "amedeo",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Shoes\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{localhost}}/api/v2/category/newCategory",
+											"host": [
+												"{{localhost}}"
+											],
+											"path": [
+												"api",
+												"v2",
+												"category",
+												"newCategory"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

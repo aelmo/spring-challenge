@@ -1,0 +1,14 @@
+{
+  "category": 0,
+  "details": [
+    {
+      "brand": "string",
+      "color": "string",
+      "notes": "string",
+      "productName": "string",
+      "type": "string"
+    }
+  ],
+  "price": 0,
+  "userId": 0
+}
