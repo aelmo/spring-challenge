@@ -178,9 +178,9 @@ public class FollowersServiceImpl implements FollowersService {
     @Override
     public List<UniqueUserFollowerResponseDTO> sortFollowerListByOrder(List<UniqueUserFollowerResponseDTO> followerResponseDTOList, String order) {
         if (validOrderers.contains(order)) {
-            if (order.equals("name_desc"))
-                return followerResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowerResponseDTO::getUserName).reversed()).collect(Collectors.toList());
             if (order.equals("name_asc"))
+                return followerResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowerResponseDTO::getUserName).reversed()).collect(Collectors.toList());
+            if (order.equals("name_desc"))
                 return followerResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowerResponseDTO::getUserName)).collect(Collectors.toList());
             if (order.equals("date_asc"))
                 return followerResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowerResponseDTO::getCreatedAt).reversed()).collect(Collectors.toList());
@@ -194,9 +194,9 @@ public class FollowersServiceImpl implements FollowersService {
     @Override
     public List<UniqueUserFollowedResponseDTO> sortFollowedListByOrder(List<UniqueUserFollowedResponseDTO> followedResponseDTOList, String order) {
         if (validOrderers.contains(order)) {
-            if (order.equals("name_desc"))
-                return followedResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowedResponseDTO::getUserName).reversed()).collect(Collectors.toList());
             if (order.equals("name_asc"))
+                return followedResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowedResponseDTO::getUserName).reversed()).collect(Collectors.toList());
+            if (order.equals("name_desc"))
                 return followedResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowedResponseDTO::getUserName)).collect(Collectors.toList());
             if (order.equals("date_asc"))
                 return followedResponseDTOList.stream().sorted(Comparator.comparing(UniqueUserFollowedResponseDTO::getCreatedAt).reversed()).collect(Collectors.toList());

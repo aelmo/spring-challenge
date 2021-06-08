@@ -40,7 +40,9 @@ public class ProductController {
     @ApiOperation(value = "New post")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Post created with success"),
-            @ApiResponse(code = 400, message = "Bad request")
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "User not encountered"),
+            @ApiResponse(code = 404, message = "Category not encountered")
     })
     @PostMapping("/newPost")
     public ResponseEntity<?> registerNewPost(@ApiParam(value = "Object for creating a new post", required = true)
@@ -52,10 +54,10 @@ public class ProductController {
             Optional<Category> category = categoryRepository.findById(postRequestDTO.getCategory());
 
             if (user.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + postRequestDTO.getUserId()), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + postRequestDTO.getUserId()), HttpStatus.NOT_FOUND);
 
             if (category.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Category not found for id: " + postRequestDTO.getCategory()), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Category not found for id: " + postRequestDTO.getCategory()), HttpStatus.NOT_FOUND);
 
             if (!user.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't create a post if you aren't a seller."), HttpStatus.BAD_REQUEST);
@@ -73,7 +75,9 @@ public class ProductController {
     @ApiOperation(value = "New promo post")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Promo post created with success"),
-            @ApiResponse(code = 400, message = "Bad request")
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "User not encountered"),
+            @ApiResponse(code = 404, message = "Category not encountered")
     })
     @PostMapping("/newPromoPost")
     public ResponseEntity<?> registerNewPromoPost(@ApiParam(value = "Object for creating a new promo post", required = true)
@@ -85,10 +89,10 @@ public class ProductController {
             Optional<Category> category = categoryRepository.findById(promoPostRequestDTO.getCategory());
 
             if (user.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + promoPostRequestDTO.getUserId()), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + promoPostRequestDTO.getUserId()), HttpStatus.NOT_FOUND);
 
             if (category.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Category not found for id: " + promoPostRequestDTO.getCategory()), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Category not found for id: " + promoPostRequestDTO.getCategory()), HttpStatus.NOT_FOUND);
 
             if (!user.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't create a promo post if you aren't a seller."), HttpStatus.BAD_REQUEST);
@@ -106,22 +110,25 @@ public class ProductController {
     @ApiOperation(value = "Get posts from followed sellers for user")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Posts returned with success"),
-            @ApiResponse(code = 400, message = "User not encountered")
+            @ApiResponse(code = 404, message = "User not encountered")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the search will be made")
     })
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity<?> getPostsFromFollowedSellers(@PathVariable("userId") final Long userId) {
+    public ResponseEntity<?> getPostsFromFollowedSellers(@PathVariable("userId") final Long userId, final String order) {
         logger.info("GET - Social Meli - (getPostsFromFollowedSellers) User: " + userId);
 
         try {
             Optional<User> user = userRepository.findById(userId);
 
             if (user.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.NOT_FOUND);
 
             List<PostResponseFindDTO> postsFound = postService.findPostByFollowed(userId);
+
+            if (postsFound != null)
+                postsFound = postService.sortPostsByOrder(postsFound, order);
 
             return new ResponseEntity<>(new PostByUserResponseDTO(userId, postsFound), HttpStatus.OK);
         } catch (Exception e) {
@@ -134,7 +141,8 @@ public class ProductController {
     @ApiOperation(value = "Get promo posts from user")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Promo posts returned with success"),
-            @ApiResponse(code = 400, message = "User not encountered")
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "User not encountered")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the search will be made")
@@ -147,7 +155,7 @@ public class ProductController {
             Optional<User> user = userRepository.findById(userId);
 
             if (user.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.NOT_FOUND);
 
             if (!user.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't return a list of promo posts from a user that isn't a seller: " + userId), HttpStatus.BAD_REQUEST);
@@ -165,7 +173,8 @@ public class ProductController {
     @ApiOperation(value = "Get count of promo products from seller")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Posts returned with success"),
-            @ApiResponse(code = 400, message = "User not encountered")
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "User not encountered")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the search will be made")
@@ -178,7 +187,7 @@ public class ProductController {
             Optional<User> user = userRepository.findById(userId);
 
             if (user.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.NOT_FOUND);
 
             if (!user.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't return a count of promo posts from a user that isn't a seller: " + userId), HttpStatus.BAD_REQUEST);
