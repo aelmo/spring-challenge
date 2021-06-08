@@ -38,6 +38,7 @@ public class ProductControllerTest {
     private static final int HTTP_STATUS_CODE_OK = 200;
     private static final int HTTP_STATUS_CODE_CREATED = 201;
     private static final int HTTP_STATUS_CODE_BAD_REQUEST = 400;
+    private static final int HTTP_STATUS_CODE_NOT_FOUND = 404;
 
     private ProductController productController;
 
@@ -164,25 +165,25 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void shouldNotCreateNewPostWhenUserNotFoundAndReturnBadRequest() {
-        logger.info("TEST - POST - Social Meli - (registerNewPost) - shouldNotCreateNewPostWhenUserNotFoundAndReturnBadRequest()");
+    public void shouldNotCreateNewPostWhenUserNotFoundAndReturnNotFound() {
+        logger.info("TEST - POST - Social Meli - (registerNewPost) - shouldNotCreateNewPostWhenUserNotFoundAndReturnNotFound()");
 
         when(categoryRepository.findById(postRequestDTOMock.getCategory())).thenReturn(Optional.of(categoryMock));
         ResponseEntity<?> responseEntity = productController.registerNewPost(postRequestDTOMock);
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertThat(responseEntity.getBody().getClass()).isEqualTo(DefaultApiResponseDTO.class);
         assertNotNull(responseEntity.getBody());
     }
 
     @Test
-    public void shouldNotCreateNewPostWhenCategoryNotFoundAndReturnBadRequest() {
-        logger.info("TEST - POST - Social Meli - (registerNewPost) - shouldNotCreateNewPostWhenCategoryNotFoundAndReturnBadRequest()");
+    public void shouldNotCreateNewPostWhenCategoryNotFoundAndReturnNotFound() {
+        logger.info("TEST - POST - Social Meli - (registerNewPost) - shouldNotCreateNewPostWhenCategoryNotFoundAndReturnNotFound()");
 
         when(userRepository.findById(postRequestDTOMock.getUserId())).thenReturn(Optional.of(userMock));
         ResponseEntity<?> responseEntity = productController.registerNewPost(postRequestDTOMock);
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertThat(responseEntity.getBody().getClass()).isEqualTo(DefaultApiResponseDTO.class);
         assertNotNull(responseEntity.getBody());
     }
@@ -214,25 +215,25 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void shouldNotCreateNewPromoPostWhenUserNotFoundAndReturnBadRequest() {
-        logger.info("TEST - POST - Social Meli - (registerNewPromoPost) - shouldNotCreateNewPromoPostWhenUserNotFoundAndReturnBadRequest()");
+    public void shouldNotCreateNewPromoPostWhenUserNotFoundAndReturnNotFound() {
+        logger.info("TEST - POST - Social Meli - (registerNewPromoPost) - shouldNotCreateNewPromoPostWhenUserNotFoundAndReturnNotFound()");
 
         when(categoryRepository.findById(promoPostRequestDTOMock.getCategory())).thenReturn(Optional.of(categoryMock));
         ResponseEntity<?> responseEntity = productController.registerNewPromoPost(promoPostRequestDTOMock);
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertThat(responseEntity.getBody().getClass()).isEqualTo(DefaultApiResponseDTO.class);
         assertNotNull(responseEntity.getBody());
     }
 
     @Test
-    public void shouldNotCreateNewPromoPostWhenCategoryNotFoundAndReturnBadRequest() {
-        logger.info("TEST - POST - Social Meli - (registerNewPromoPost) - shouldNotCreateNewPromoPostWhenCategoryNotFoundAndReturnBadRequest()");
+    public void shouldNotCreateNewPromoPostWhenCategoryNotFoundAndReturnNotFound() {
+        logger.info("TEST - POST - Social Meli - (registerNewPromoPost) - shouldNotCreateNewPromoPostWhenCategoryNotFoundAndReturnNotFound()");
 
         when(userRepository.findById(promoPostRequestDTOMock.getUserId())).thenReturn(Optional.of(userMock));
         ResponseEntity<?> responseEntity = productController.registerNewPromoPost(promoPostRequestDTOMock);
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertThat(responseEntity.getBody().getClass()).isEqualTo(DefaultApiResponseDTO.class);
         assertNotNull(responseEntity.getBody());
     }
@@ -255,7 +256,7 @@ public class ProductControllerTest {
         logger.info("TEST - GET - Social Meli - (getPostsFromFollowedSellers) - shouldReturnPostsFromFollowedSellersAndReturnOk()");
 
         when(userRepository.findById(userMock.getId())).thenReturn(Optional.of(userMock));
-        ResponseEntity<?> responseEntity = productController.getPostsFromFollowedSellers(userMock.getId());
+        ResponseEntity<?> responseEntity = productController.getPostsFromFollowedSellers(userMock.getId(), "");
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_OK);
         assertThat(responseEntity.getBody().getClass()).isEqualTo(PostByUserResponseDTO.class);
@@ -263,12 +264,12 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void shouldNotReturnPostsFromFollowedSellersWhenUserNotFoundAndReturnBadRequest() {
-        logger.info("TEST - GET - Social Meli - (getPostsFromFollowedSellers) - shouldNotReturnPostsFromFollowedSellersWhenUserNotFoundAndReturnBadRequest()");
+    public void shouldNotReturnPostsFromFollowedSellersWhenUserNotFoundAndReturnNotFound() {
+        logger.info("TEST - GET - Social Meli - (getPostsFromFollowedSellers) - shouldNotReturnPostsFromFollowedSellersWhenUserNotFoundAndReturnNotFound()");
 
-        ResponseEntity<?> responseEntity = productController.getPostsFromFollowedSellers(userMock.getId());
+        ResponseEntity<?> responseEntity = productController.getPostsFromFollowedSellers(userMock.getId(), "");
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertThat(responseEntity.getBody().getClass()).isEqualTo(DefaultApiResponseDTO.class);
         assertNotNull(responseEntity.getBody());
     }
@@ -286,12 +287,12 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void shouldNotReturnPromoPostsFromUserWhenUserNotFoundAndReturnBadRequest() {
-        logger.info("TEST - GET - Social Meli - (getPromoPostsFromUser) - shouldNotReturnPromoPostsFromUserWhenUserNotFoundAndReturnBadRequest()");
+    public void shouldNotReturnPromoPostsFromUserWhenUserNotFoundAndReturnNotFound() {
+        logger.info("TEST - GET - Social Meli - (getPromoPostsFromUser) - shouldNotReturnPromoPostsFromUserWhenUserNotFoundAndReturnNotFound()");
 
         ResponseEntity<?> responseEntity = productController.getPromoPostsFromUser(userMock.getId());
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertThat(responseEntity.getBody().getClass()).isEqualTo(DefaultApiResponseDTO.class);
         assertNotNull(responseEntity.getBody());
     }
@@ -321,12 +322,12 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void shouldNotReturnCountOfPromosWhenUserNotFoundAndReturnBadRequest() {
-        logger.info("TEST - GET - Social Meli - (getCountOfPromoProducts) - shouldNotReturnCountOfPromosWhenUserNotFoundAndReturnBadRequest()");
+    public void shouldNotReturnCountOfPromosWhenUserNotFoundAndReturnNotFound() {
+        logger.info("TEST - GET - Social Meli - (getCountOfPromoProducts) - shouldNotReturnCountOfPromosWhenUserNotFoundAndReturnNotFound()");
 
         ResponseEntity<?> responseEntity = productController.getPromoPostsFromUser(userMock.getId());
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertThat(responseEntity.getBody().getClass()).isEqualTo(DefaultApiResponseDTO.class);
         assertNotNull(responseEntity.getBody());
     }

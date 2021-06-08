@@ -14,6 +14,21 @@
 						{
 							"name": "US01 - Follow certain seller - Wrong ID (User to be followed)",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"url": {
@@ -36,6 +51,21 @@
 						{
 							"name": "US01 - Follow certain seller - Wrong ID (User following)",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"url": {
@@ -58,6 +88,21 @@
 						{
 							"name": "US01 - Follow certain seller - Not Seller",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"url": {
@@ -80,6 +125,21 @@
 						{
 							"name": "US01 - Follow certain seller - Follow same ID",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"url": {
@@ -102,6 +162,21 @@
 						{
 							"name": "US02 - Follower Count - Wrong ID",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -124,6 +199,21 @@
 						{
 							"name": "US02 - Follower Count - Not Seller",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -146,6 +236,21 @@
 						{
 							"name": "US03 - Who Follows Me? - Wrong ID",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -168,6 +273,21 @@
 						{
 							"name": "US03 - Who Follows Me? - Not Seller",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -190,6 +310,21 @@
 						{
 							"name": "US04 - Who do I Follow? - Wrong ID",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -212,6 +347,21 @@
 						{
 							"name": "US05 -  Create a new Post - Wrong User ID",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -241,6 +391,21 @@
 						{
 							"name": "US05 -  Create a new Post - Wrong Category ID",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -270,6 +435,21 @@
 						{
 							"name": "US05 -  Create a new Post - Not Seller",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -299,6 +479,21 @@
 						{
 							"name": "US06 - Get post from followed sellers - Wrong User ID",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -321,6 +516,21 @@
 						{
 							"name": "US07 - Unfollow certain seller - Wrong ID (User to be followed)",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"url": {
@@ -343,6 +553,21 @@
 						{
 							"name": "US07 - Unfollow certain seller - Wrong ID (User following)",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"url": {
@@ -365,6 +590,21 @@
 						{
 							"name": "US07- Unfollow certain seller - Not Seller",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"url": {
@@ -387,6 +627,21 @@
 						{
 							"name": "US07 - Unfollow certain seller - Unfollow same ID",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "elmo",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "amedeo",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"url": {
@@ -411,6 +666,21 @@
 				{
 					"name": "US01 - Follow certain seller",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
@@ -433,6 +703,21 @@
 				{
 					"name": "US02 - Follower Count",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -455,6 +740,21 @@
 				{
 					"name": "US03 - Who Follows Me?",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -477,6 +777,21 @@
 				{
 					"name": "US04 - Who do I Follow?",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -499,6 +814,21 @@
 				{
 					"name": "US05 -  Create a new Post",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -528,6 +858,21 @@
 				{
 					"name": "US06 - Get post from followed sellers",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -550,6 +895,21 @@
 				{
 					"name": "US07 - Unfollow certain seller",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
@@ -572,6 +932,21 @@
 				{
 					"name": "US08 - Who Follows Me? - Order ASC",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -600,6 +975,21 @@
 				{
 					"name": "US08 - Who Follows Me? - Order DESC",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -628,6 +1018,21 @@
 				{
 					"name": "US08 - Who do I Follow? - Order ASC",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -656,6 +1061,21 @@
 				{
 					"name": "US08 - Who do I Follow? - Order DESC",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -682,8 +1102,23 @@
 					"response": []
 				},
 				{
-					"name": "US09 - Who Follows Me? - Date Order ASC",
+					"name": "US08 - Who Follows Me? - Date Order ASC",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -710,8 +1145,23 @@
 					"response": []
 				},
 				{
-					"name": "US09 - Who Follows Me? - Date Order DESC",
+					"name": "US08 - Who Follows Me? - Date Order DESC",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -738,8 +1188,23 @@
 					"response": []
 				},
 				{
-					"name": "US09 - Who do I Follow? - Date Order ASC",
+					"name": "US08 - Who do I Follow? - Date Order ASC",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -766,8 +1231,23 @@
 					"response": []
 				},
 				{
-					"name": "US09 - Who do I Follow? - Date Order DESC",
+					"name": "US08 - Who do I Follow? - Date Order DESC",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -781,6 +1261,92 @@
 								"user",
 								"2",
 								"followed",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "date_desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US09 - Get post from followed sellers - Order ASC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/products/followed/1/list?order=date_asc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"followed",
+								"1",
+								"list"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "date_asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "US09 - Get post from followed sellers - Order DESC",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/api/v1/products/followed/1/list?order=date_desc",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"followed",
+								"1",
 								"list"
 							],
 							"query": [
@@ -977,6 +1543,21 @@
 				{
 					"name": "US10 -  Create a new Promo Post",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1006,6 +1587,21 @@
 				{
 					"name": "US11 - Post Count By User",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1027,6 +1623,21 @@
 				{
 					"name": "US12 - Promo posts by User",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "elmo",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amedeo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {

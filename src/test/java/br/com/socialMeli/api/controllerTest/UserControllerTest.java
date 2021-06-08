@@ -32,6 +32,8 @@ public class UserControllerTest {
 
     private static final int HTTP_STATUS_CODE_OK = 200;
     private static final int HTTP_STATUS_CODE_BAD_REQUEST = 400;
+    private static final int HTTP_STATUS_CODE_NOT_FOUND = 404;
+    private static final int HTTP_STATUS_CODE_CONFLICT = 409;
 
     private static final Long USER_SELLER_ID = 1L;
     private static final Long USER_NOT_SELLER_ID = 2L;
@@ -105,22 +107,22 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldNotSaveToFollowersListIfUsersDontExistAndReturnBadRequest() {
-        logger.info("TEST - POST - Social Meli - (followUser) - shouldNotSaveToFollowersListIfUsersDontExistAndReturnBadRequest()");
+    public void shouldNotSaveToFollowersListIfUsersDontExistAndReturnNotFound() {
+        logger.info("TEST - POST - Social Meli - (followUser) - shouldNotSaveToFollowersListIfUsersDontExistAndReturnNotFound()");
 
         ResponseEntity<?> responseEntity = userController.followUser(10L, 20L);
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertNotNull(responseEntity.getBody());
     }
 
     @Test
-    public void shouldNotSaveToFollowersListIfSameUserAndReturnBadRequest() {
-        logger.info("TEST - POST - Social Meli - (followUser) - shouldNotSaveToFollowersListIfSameUserAndReturnBadRequest()");
+    public void shouldNotSaveToFollowersListIfSameUserAndReturnConflict() {
+        logger.info("TEST - POST - Social Meli - (followUser) - shouldNotSaveToFollowersListIfSameUserAndReturnConflict()");
 
         ResponseEntity<?> responseEntity = userController.followUser(USER_SELLER_ID, USER_SELLER_ID);
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_CONFLICT);
         assertNotNull(responseEntity.getBody());
     }
 
@@ -145,12 +147,12 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldNotShowFollowersCountIfUserDontExistAndReturnBadRequest() {
-        logger.info("TEST - GET - Social Meli - (getFollowerCountForUser) - shouldNotShowFollowersCountIfUserDontExistAndReturnBadRequest()");
+    public void shouldNotShowFollowersCountIfUserDontExistAndReturnNotFound() {
+        logger.info("TEST - GET - Social Meli - (getFollowerCountForUser) - shouldNotShowFollowersCountIfUserDontExistAndReturnNotFound()");
 
         ResponseEntity<?> responseEntity = userController.getFollowerCountForUser(USER_NOT_EXIST_ID);
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertNotNull(responseEntity.getBody());
     }
 
@@ -175,12 +177,12 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldNotShowFollowersListIfUserDontExistAndReturnBadRequest() {
-        logger.info("TEST - GET - Social Meli - (getFollowerListForUser) - shouldNotShowFollowersListIfUserDontExistAndReturnBadRequest()");
+    public void shouldNotShowFollowersListIfUserDontExistAndReturnNotFound() {
+        logger.info("TEST - GET - Social Meli - (getFollowerListForUser) - shouldNotShowFollowersListIfUserDontExistAndReturnNotFound()");
 
         ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_NOT_EXIST_ID, "");
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertNotNull(responseEntity.getBody());
     }
 
@@ -205,12 +207,12 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldNotShowFollowedsListIfUserDontExistAndReturnBadRequest() {
-        logger.info("TEST - GET - Social Meli - (getFollowedListForUser) - shouldNotShowFollowedsListIfUserDontExistAndReturnBadRequest()");
+    public void shouldNotShowFollowedsListIfUserDontExistAndReturnNotFound() {
+        logger.info("TEST - GET - Social Meli - (getFollowedListForUser) - shouldNotShowFollowedsListIfUserDontExistAndReturnNotFound()");
 
         ResponseEntity<?> responseEntity = userController.getFollowerListForUser(USER_NOT_EXIST_ID, "");
 
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_BAD_REQUEST);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HTTP_STATUS_CODE_NOT_FOUND);
         assertNotNull(responseEntity.getBody());
     }
 

@@ -19,11 +19,14 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
 
     private static final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
+
+    private static final List<String> validOrderers = new ArrayList<>(List.of("date_asc", "date_desc"));
 
     private final PostRepository postRepository;
 
@@ -281,6 +284,18 @@ public class PostServiceImpl implements PostService {
             logger.error(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<PostResponseFindDTO> sortPostsByOrder(List<PostResponseFindDTO> postsFound, String order) {
+        if (validOrderers.contains(order)) {
+            if (order.equals("date_asc"))
+                return postsFound.stream().sorted(Comparator.comparing(PostResponseFindDTO::getDate).reversed()).collect(Collectors.toList());
+            if (order.equals("date_desc"))
+                return postsFound.stream().sorted(Comparator.comparing(PostResponseFindDTO::getDate)).collect(Collectors.toList());
+        }
+        logger.error("Order parameter is not valid");
+        return postsFound;
     }
 
     private Date getDateTwoWeeksEarlier(final Date date) {

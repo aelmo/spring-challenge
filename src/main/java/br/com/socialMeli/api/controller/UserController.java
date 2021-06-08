@@ -37,7 +37,9 @@ public class UserController {
     @ApiOperation(value = "Follow user")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User followed with success"),
-            @ApiResponse(code = 400, message = "User not encountered")
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "User not encountered"),
+            @ApiResponse(code = 409, message = "You can't follow yourself")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that's following"),
@@ -53,13 +55,13 @@ public class UserController {
             Optional<Followers> followExists = followersRepository.findFollowersByFollowerIdAndFollowedId(userId, userIdToFollow);
 
             if (userFollowing.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.NOT_FOUND);
 
             if (userToBeFollowed.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userIdToFollow), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userIdToFollow), HttpStatus.NOT_FOUND);
 
             if (userId.equals(userIdToFollow))
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't follow yourself."), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't follow yourself."), HttpStatus.CONFLICT);
 
             if (!userToBeFollowed.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't follow an user that isn't a seller."), HttpStatus.BAD_REQUEST);
@@ -80,7 +82,9 @@ public class UserController {
     @ApiOperation(value = "Unfollow user")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User unfollowed with success"),
-            @ApiResponse(code = 400, message = "User not encountered")
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "User not encountered"),
+            @ApiResponse(code = 409, message = "You can't unfollow yourself")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that's unfollowing"),
@@ -96,13 +100,13 @@ public class UserController {
             Optional<Followers> followExists = followersRepository.findFollowersByFollowerIdAndFollowedId(userId, userIdToUnfollow);
 
             if (userUnfollowing.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.NOT_FOUND);
 
             if (userToBeUnfollowed.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userIdToUnfollow), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userIdToUnfollow), HttpStatus.NOT_FOUND);
 
             if (userId.equals(userIdToUnfollow))
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't unfollow yourself."), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't unfollow yourself."), HttpStatus.CONFLICT);
 
             if (!userToBeUnfollowed.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "You can't unfollow an user that isn't a seller."), HttpStatus.BAD_REQUEST);
@@ -123,7 +127,8 @@ public class UserController {
     @ApiOperation(value = "Follow count for user")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User follower count returned with success"),
-            @ApiResponse(code = 400, message = "User not encountered")
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "User not encountered")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the count will be made")
@@ -136,7 +141,7 @@ public class UserController {
             Optional<User> user = userRepository.findById(userId);
 
             if (user.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.NOT_FOUND);
 
             if (!user.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Only users that are sellers can have followers."), HttpStatus.BAD_REQUEST);
@@ -154,7 +159,8 @@ public class UserController {
     @ApiOperation(value = "Followers list for user")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User follower list returned with success"),
-            @ApiResponse(code = 400, message = "User not encountered")
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "User not encountered")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the list will be made")
@@ -167,7 +173,7 @@ public class UserController {
             Optional<User> user = userRepository.findById(userId);
 
             if (user.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.NOT_FOUND);
 
             if (!user.get().getIsSeller())
                 return new ResponseEntity<>(new DefaultApiResponseDTO(false, "Only users that are sellers can have a list of followers."), HttpStatus.BAD_REQUEST);
@@ -186,7 +192,7 @@ public class UserController {
     @ApiOperation(value = "Followed list for user")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User followed list returned with success"),
-            @ApiResponse(code = 400, message = "User not encountered")
+            @ApiResponse(code = 404, message = "User not encountered")
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", dataType = "int", value = "Id from user that the list will be made")
@@ -199,7 +205,7 @@ public class UserController {
             Optional<User> user = userRepository.findById(userId);
 
             if (user.isEmpty())
-                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new DefaultApiResponseDTO(false, "User not found for id: " + userId), HttpStatus.NOT_FOUND);
 
             List<UniqueUserFollowedResponseDTO> followeds = followersService.getFollowedsListById(userId);
             List<UniqueUserFollowedResponseDTO> followedsOrdered = followersService.sortFollowedListByOrder(followeds, order);

@@ -20,4 +20,6 @@ public interface PostService {
     List<PromoPostResponseFindDTO> findPromoPostByUser(final User user);
 
     Long countPostsByUser(final User user);
+
+    List<PostResponseFindDTO> sortPostsByOrder(List<PostResponseFindDTO> postsFound, String order);
 }
