@@ -2,6 +2,11 @@ version: '3'
 
 services:
   backendservice:
-    build: ../spring-challenge
+    image: aelmo/rest-api-social-meli
+    container_name: social-meli
+    build:
+      context: ../spring-challenge
+      args:
+        - PORT=8080
     ports:
       - "8080:8080"
